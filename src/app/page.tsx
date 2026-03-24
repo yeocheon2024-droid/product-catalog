@@ -98,6 +98,7 @@ export default function HomePage() {
           <nav className="hidden md:flex items-center gap-8">
             <button onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })} className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">회사소개</button>
             <span className="text-sm font-bold text-amber-700 border-b-2 border-amber-600 pb-1">제품소개</span>
+            <a href="/order" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">발주하기</a>
             <a href="tel:1566-1521" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">문의하기</a>
           </nav>
           {/* 모바일 햄버거 */}
@@ -112,6 +113,7 @@ export default function HomePage() {
           <div className="md:hidden bg-white border-t border-gray-100 shadow-lg">
             <button onClick={() => { setMenuOpen(false); document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }); }} className="block w-full text-left px-6 py-3 text-sm text-gray-700 hover:bg-gray-50">회사소개</button>
             <span className="block px-6 py-3 text-sm font-bold text-amber-700 bg-amber-50">제품소개</span>
+            <a href="/order" onClick={() => setMenuOpen(false)} className="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-50">발주하기</a>
             <a href="tel:1566-1521" onClick={() => setMenuOpen(false)} className="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-50">문의하기</a>
           </div>
         )}
