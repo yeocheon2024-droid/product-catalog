@@ -69,7 +69,7 @@ function ProductDetail() {
           </a>
           <div className="flex items-center gap-1.5">
             <img src="/logo.png" alt="지구농산" className="h-7 w-7" />
-            <span className="text-sm text-amber-900 tracking-wide" style={{ fontFamily: "'Gowun Dodum', sans-serif" }}>지구농산</span>
+            <span className="text-sm text-amber-900 tracking-wide" style={{ fontFamily: "'Jua', sans-serif" }}>지구농산</span>
           </div>
         </div>
       </header>

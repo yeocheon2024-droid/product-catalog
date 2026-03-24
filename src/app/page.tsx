@@ -92,7 +92,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
           <a href="/" className="flex items-center gap-2.5">
             <img src="/logo.png" alt="지구농산" className="h-9 w-9" />
-            <span className="text-xl text-amber-900 tracking-wide" style={{ fontFamily: "'Gowun Dodum', sans-serif" }}>지구농산</span>
+            <span className="text-xl text-amber-900 tracking-wide" style={{ fontFamily: "'Jua', sans-serif" }}>지구농산</span>
           </a>
           {/* PC 메뉴 */}
           <nav className="hidden md:flex items-center gap-8">
@@ -210,7 +210,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <p className="text-gray-600 leading-relaxed">
-                식당과 급식현장의 식탁을 함께 채워온 <strong className="text-gray-900" style={{ fontFamily: "'Gowun Dodum', sans-serif" }}>지구농산</strong>입니다.
+                식당과 급식현장의 식탁을 함께 채워온 <strong className="text-gray-900" style={{ fontFamily: "'Jua', sans-serif" }}>지구농산</strong>입니다.
                 <br />쌀·잡곡·계란·김치·반찬·기름 등 300여 가지 품목을 합리적인 가격으로 당일 공급합니다.
                 <br />주문부터 배송까지 친절하게 응대하며, 오랜 거래처와 쌓아온 신뢰로 내일도 찾아가겠습니다.
               </p>
@@ -262,7 +262,7 @@ export default function HomePage() {
             <div>
               <div className="flex items-center gap-2.5">
                 <img src="/logo.png" alt="지구농산" className="h-8 w-8 brightness-0 invert opacity-80" />
-                <h3 className="text-white text-lg tracking-wide" style={{ fontFamily: "'Gowun Dodum', sans-serif" }}>지구농산 농업회사법인</h3>
+                <h3 className="text-white text-lg tracking-wide" style={{ fontFamily: "'Jua', sans-serif" }}>지구농산 농업회사법인</h3>
               </div>
               <p className="text-sm mt-1 text-gray-500">쌀 · 김치 · 계란 · 종합유통</p>
               <p className="text-sm mt-1">신선한 식자재를 공급합니다.</p>
