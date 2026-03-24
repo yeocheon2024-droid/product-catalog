@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap');
 
 body {
   font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -30,7 +30,6 @@ body {
   }
 }
 
-/* 이미지 트랜지션 */
 .card-img {
   transition: transform 0.3s ease;
 }
@@ -42,14 +41,13 @@ body {
   to { opacity: 1; transform: scale(1); }
 }
 
-/* 인쇄 숨김 */
 @media print {
   .no-print { display: none !important; }
 }
 
-/* 빨간 액센트 탭 */
+/* 골드 액센트 탭 */
 .cat-tab-active {
-  color: #dc2626;
+  color: #92400e;
   font-weight: 700;
-  border-bottom: 3px solid #dc2626;
+  border-bottom: 3px solid #b45309;
 }

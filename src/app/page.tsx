@@ -33,7 +33,18 @@ export default function HomePage() {
     const data = await fetchProducts();
     setProducts(data);
     const minors = new Set(data.map(p => p.minor_name).filter(Boolean));
-    setAllMinorCategories(Array.from(minors).sort());
+    const PRIORITY_ORDER = ['쌀', '김치/반찬', '계란'];
+    const sorted = Array.from(minors).sort((a, b) => {
+      const aIdx = PRIORITY_ORDER.indexOf(a);
+      const bIdx = PRIORITY_ORDER.indexOf(b);
+      if (aIdx !== -1 && bIdx !== -1) return aIdx - bIdx;
+      if (aIdx !== -1) return -1;
+      if (bIdx !== -1) return 1;
+      const aCount = data.filter(p => p.minor_name === a).length;
+      const bCount = data.filter(p => p.minor_name === b).length;
+      return bCount - aCount;
+    });
+    setAllMinorCategories(sorted);
     setLoading(false);
   }
 
@@ -71,14 +82,15 @@ export default function HomePage() {
       {/* ===== 상단 네비게이션 ===== */}
       <header className="border-b border-gray-200 sticky top-0 z-50 bg-white">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
-          <a href="/" className="text-xl font-black text-red-600 tracking-tight">
-            지구농산
+          <a href="/" className="flex items-center gap-2">
+            <img src="/logo.png" alt="지구농산" className="h-9 w-9" />
+            <span className="text-xl font-semibold text-amber-800 tracking-tight">지구농산</span>
           </a>
           {/* PC 메뉴 */}
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#about" className="text-sm font-medium text-gray-700 hover:text-red-600 transition-colors">회사소개</a>
-            <span className="text-sm font-bold text-red-600 border-b-2 border-red-600 pb-1">제품소개</span>
-            <a href="tel:061-000-0000" className="text-sm font-medium text-gray-700 hover:text-red-600 transition-colors">문의하기</a>
+            <a href="#about" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">회사소개</a>
+            <span className="text-sm font-bold text-amber-700 border-b-2 border-amber-600 pb-1">제품소개</span>
+            <a href="tel:061-000-0000" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">문의하기</a>
           </nav>
           {/* 모바일 햄버거 */}
           <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden p-2">
@@ -91,7 +103,7 @@ export default function HomePage() {
         {menuOpen && (
           <div className="md:hidden bg-white border-t border-gray-100 shadow-lg">
             <a href="#about" onClick={() => setMenuOpen(false)} className="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-50">회사소개</a>
-            <span className="block px-6 py-3 text-sm font-bold text-red-600 bg-red-50">제품소개</span>
+            <span className="block px-6 py-3 text-sm font-bold text-amber-700 bg-amber-50">제품소개</span>
             <a href="tel:061-000-0000" onClick={() => setMenuOpen(false)} className="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-50">문의하기</a>
           </div>
         )}
@@ -112,7 +124,7 @@ export default function HomePage() {
             {/* 전체 메뉴 아이콘 */}
             <button
               onClick={() => handleCategoryChange('전체')}
-              className={`shrink-0 flex items-center justify-center w-10 h-10 rounded-full border-2 mr-2 transition-all ${activeCategory === '전체' ? 'border-red-600 text-red-600' : 'border-gray-300 text-gray-400 hover:border-gray-500'}`}
+              className={`shrink-0 flex items-center justify-center w-10 h-10 rounded-full border-2 mr-2 transition-all ${activeCategory === '전체' ? 'border-amber-600 text-amber-700' : 'border-gray-300 text-gray-400 hover:border-gray-500'}`}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/></svg>
             </button>
@@ -139,7 +151,7 @@ export default function HomePage() {
               placeholder="품목명으로 검색"
               value={search}
               onChange={e => handleSearch(e.target.value)}
-              className="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              className="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
             />
             {search && (
               <button onClick={() => handleSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
@@ -213,21 +225,21 @@ export default function HomePage() {
               <h3 className="font-bold text-gray-900 mb-4">연락처</h3>
               <div className="space-y-3 text-sm">
                 <div className="flex items-start gap-3">
-                  <svg className="w-5 h-5 text-red-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                  <svg className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                   <div>
                     <p className="text-gray-500">전화</p>
-                    <a href="tel:061-000-0000" className="text-gray-900 font-medium hover:text-red-600">061-000-0000</a>
+                    <a href="tel:061-000-0000" className="text-gray-900 font-medium hover:text-amber-700">061-000-0000</a>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <svg className="w-5 h-5 text-red-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                  <svg className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                   <div>
                     <p className="text-gray-500">주소</p>
                     <p className="text-gray-900 font-medium">전라남도 여수시</p>
                   </div>
                 </div>
               </div>
-              <a href="tel:061-000-0000" className="mt-6 w-full flex items-center justify-center gap-2 bg-red-600 text-white py-3 rounded-xl text-sm font-bold hover:bg-red-700 transition-colors">
+              <a href="tel:061-000-0000" className="mt-6 w-full flex items-center justify-center gap-2 bg-amber-700 text-white py-3 rounded-xl text-sm font-bold hover:bg-amber-800 transition-colors">
                 📞 전화 문의하기
               </a>
             </div>
@@ -240,7 +252,10 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="flex flex-col md:flex-row md:justify-between gap-4">
             <div>
-              <h3 className="text-white font-black text-lg">지구농산 (주)</h3>
+              <div className="flex items-center gap-2">
+                <img src="/logo.png" alt="지구농산" className="h-8 w-8 brightness-0 invert opacity-80" />
+                <h3 className="text-white font-semibold text-lg">지구농산 (주)</h3>
+              </div>
               <p className="text-sm mt-1">신선한 식자재를 공급합니다.</p>
             </div>
             <div className="text-sm space-y-1">
@@ -295,7 +310,7 @@ function ProductCard({ product, showPrice, onClick }: { product: Product; showPr
           <p className="text-xs text-gray-400 mt-0.5 truncate">{product.spec}</p>
         )}
         {showPrice && product.sell > 0 && (
-          <p className="text-sm font-bold text-red-600 mt-1">{formatPrice(product.sell)}</p>
+          <p className="text-sm font-bold text-amber-700 mt-1">{formatPrice(product.sell)}</p>
         )}
       </div>
     </div>
@@ -349,7 +364,7 @@ function ProductModal({ product, showPrice, onClose }: { product: Product; showP
             {product.spec && (
               <div className="mt-3">
                 <span className="text-xs text-gray-400">규격</span>
-                <span className="ml-3 inline-block px-4 py-1.5 border-2 border-red-500 text-red-500 rounded-full text-sm font-bold">{product.spec}</span>
+                <span className="ml-3 inline-block px-4 py-1.5 border-2 border-amber-600 text-amber-600 rounded-full text-sm font-bold">{product.spec}</span>
               </div>
             )}
 
@@ -367,13 +382,13 @@ function ProductModal({ product, showPrice, onClose }: { product: Product; showP
 
             {/* 가격 */}
             {showPrice && product.sell > 0 && (
-              <div className="mt-4 p-4 bg-red-50 rounded-xl">
+              <div className="mt-4 p-4 bg-amber-50 rounded-xl">
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-500">판매단가</span>
-                  <span className="text-xl font-black text-red-600">{formatPrice(product.sell)}</span>
+                  <span className="text-xl font-black text-amber-700">{formatPrice(product.sell)}</span>
                 </div>
                 {product.tax === '과세' && (
-                  <div className="mt-2 pt-2 border-t border-red-100 text-xs text-gray-400 space-y-1">
+                  <div className="mt-2 pt-2 border-t border-amber-200 text-xs text-gray-400 space-y-1">
                     <div className="flex justify-between"><span>공급가액</span><span>{supplyPrice.toLocaleString()}원</span></div>
                     <div className="flex justify-between"><span>부가세</span><span>{vat.toLocaleString()}원</span></div>
                   </div>
@@ -382,7 +397,7 @@ function ProductModal({ product, showPrice, onClose }: { product: Product; showP
             )}
 
             {/* 문의 버튼 */}
-            <a href="tel:061-000-0000" className="mt-6 w-full flex items-center justify-center gap-2 bg-red-600 text-white py-3.5 rounded-xl text-sm font-bold hover:bg-red-700 transition-colors">
+            <a href="tel:061-000-0000" className="mt-6 w-full flex items-center justify-center gap-2 bg-amber-700 text-white py-3.5 rounded-xl text-sm font-bold hover:bg-amber-800 transition-colors">
               📞 문의하기
             </a>
           </div>
