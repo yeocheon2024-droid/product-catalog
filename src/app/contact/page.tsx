@@ -17,6 +17,13 @@ const DELIVERY_AREAS = [
   },
 ];
 
+const STRENGTHS = [
+  { title: '당일 새벽·오전 배송', desc: '전날 오후 4시까지 주문 시 다음날 새벽 또는 오전 배송' },
+  { title: '즉시 반품·회수', desc: '문제 발생 시 담당자가 직접 회수, 교환·환불 신속 처리' },
+  { title: '전담 담당자 배정', desc: '거래처별 전담 영업 담당자가 밀착 관리' },
+  { title: '검증된 납품 이력', desc: '프랜차이즈, 병원, 단체급식 등 다양한 업종에 장기 납품' },
+];
+
 export default function ContactPage() {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -51,37 +58,49 @@ export default function ContactPage() {
         )}
       </header>
 
-      {/* ===== 타이틀 + 대표번호 ===== */}
+      {/* ===== 소개 ===== */}
       <div className="max-w-3xl mx-auto px-6 py-12 md:py-16">
-        <h1 className="text-2xl md:text-3xl font-black text-gray-900">문의하기</h1>
-        <p className="mt-2 text-gray-500 text-sm">주문 및 거래 관련 문의는 대표번호로 연락 부탁드립니다.</p>
-
-        <div className="mt-8 border border-gray-200 rounded-xl p-6">
-          <p className="text-xs text-gray-400 mb-1">대표전화</p>
-          <a href="tel:1566-1521" className="text-3xl font-black text-gray-900 hover:text-amber-700 transition-colors">
-            1566-1521
-          </a>
-          <p className="mt-2 text-sm text-gray-400">평일 운영 (토·일·공휴일 휴무)</p>
-          <a href="tel:1566-1521" className="mt-5 inline-flex items-center gap-2 bg-amber-700 text-white px-6 py-3 rounded-xl text-sm font-bold hover:bg-amber-800 transition-colors">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-            전화하기
-          </a>
-        </div>
+        <p className="text-sm text-amber-700 font-medium">거래처의 요구를 먼저 생각하는</p>
+        <h1 className="text-2xl md:text-3xl font-black text-gray-900 mt-1">신뢰 기반 식자재 유통 파트너</h1>
+        <p className="mt-4 text-gray-500 text-sm leading-relaxed">
+          쌀, 잡곡, 계란, 김치, 반찬, 기름 등 다양한 식자재를 프랜차이즈 식당, 병원, 급식시설에 안정적으로 공급해온 전문 유통 기업입니다.
+          빠른 배송과 책임감 있는 사후관리로 오랜 시간 신뢰를 쌓아왔습니다.
+        </p>
       </div>
 
-      {/* ===== 배송 가능 지역 ===== */}
+      {/* ===== 핵심 강점 ===== */}
       <section className="border-t border-gray-100">
         <div className="max-w-3xl mx-auto px-6 py-12 md:py-16">
-          <h2 className="text-xl font-bold text-gray-900">평일 배송 가능 지역</h2>
-          <p className="mt-1 text-sm text-gray-400">아래 지역은 평일 주문 시 당일 배송이 가능합니다.</p>
+          <h2 className="text-xl font-bold text-gray-900 mb-6">핵심 강점</h2>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {STRENGTHS.map(item => (
+              <div key={item.title} className="border border-gray-200 rounded-xl p-5">
+                <h3 className="font-bold text-gray-900 text-sm">{item.title}</h3>
+                <p className="mt-1 text-xs text-gray-500 leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-          <div className="mt-8 space-y-6">
+      {/* ===== 배송 안내 ===== */}
+      <section className="border-t border-gray-100 bg-gray-50">
+        <div className="max-w-3xl mx-auto px-6 py-12 md:py-16">
+          <h2 className="text-xl font-bold text-gray-900 mb-2">배송 안내</h2>
+          <p className="text-sm text-gray-900 font-medium">전날 오후 4시까지 주문 마감 → 다음날 새벽·오전 배송</p>
+          <p className="mt-3 text-sm text-gray-500 leading-relaxed">
+            급식, 식당, 병원 등 이른 시간 운영이 필요한 거래처를 위해 최적화된 배송 시스템을 운영합니다.
+            당일 긴급 발주가 필요한 경우에도 담당자에게 직접 연락하시면 최선을 다해 지원해드립니다.
+          </p>
+
+          <h3 className="text-sm font-bold text-gray-900 mt-8 mb-3">평일 배송 가능 지역</h3>
+          <div className="space-y-4">
             {DELIVERY_AREAS.map(group => (
               <div key={group.region}>
-                <h3 className="text-sm font-bold text-amber-800 mb-3">{group.region}</h3>
+                <p className="text-xs font-bold text-amber-800 mb-2">{group.region}</p>
                 <div className="flex flex-wrap gap-2">
                   {group.areas.map(area => (
-                    <span key={area} className="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-700">
+                    <span key={area} className="px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-700">
                       {area}
                     </span>
                   ))}
@@ -89,33 +108,51 @@ export default function ContactPage() {
               </div>
             ))}
           </div>
-
-          <p className="mt-8 text-xs text-gray-400">
-            상기 지역 외 배송은 대표번호로 문의해 주세요.
-          </p>
+          <p className="mt-6 text-xs text-gray-400">상기 지역 외 배송은 대표번호로 문의해 주세요. 평일 운영 (토·일·공휴일 휴무)</p>
         </div>
       </section>
 
-      {/* ===== 회사 정보 ===== */}
+      {/* ===== 고객 약속 ===== */}
       <section className="border-t border-gray-100">
         <div className="max-w-3xl mx-auto px-6 py-12 md:py-16">
-          <h2 className="text-xl font-bold text-gray-900 mb-6">회사 정보</h2>
-          <div className="grid sm:grid-cols-2 gap-y-4 gap-x-8 text-sm">
+          <h2 className="text-xl font-bold text-gray-900 mb-6">고객 약속</h2>
+          <ul className="space-y-3 text-sm text-gray-600 leading-relaxed">
+            <li className="flex gap-2"><span className="text-amber-700 shrink-0">·</span>거래처의 모든 요청 사항을 담당자가 직접 확인하고 최대한 반영합니다.</li>
+            <li className="flex gap-2"><span className="text-amber-700 shrink-0">·</span>품질 문제가 발생하면 즉시 회수 후 교환 또는 환불로 처리합니다.</li>
+            <li className="flex gap-2"><span className="text-amber-700 shrink-0">·</span>정해진 시간에 정량을 정확하게 납품하는 것을 원칙으로 합니다.</li>
+            <li className="flex gap-2"><span className="text-amber-700 shrink-0">·</span>장기 거래처일수록 더 세심하게 관리합니다.</li>
+          </ul>
+        </div>
+      </section>
+
+      {/* ===== 대표번호 ===== */}
+      <section className="border-t border-gray-100 bg-gray-50">
+        <div className="max-w-3xl mx-auto px-6 py-12 md:py-16">
+          <p className="text-sm text-gray-500">식자재 공급 문의는 언제든지 연락 주십시오.</p>
+          <div className="mt-4 border border-gray-200 bg-white rounded-xl p-6 inline-block">
+            <p className="text-xs text-gray-400 mb-1">대표전화</p>
+            <a href="tel:1566-1521" className="text-3xl font-black text-gray-900 hover:text-amber-700 transition-colors">
+              1566-1521
+            </a>
+            <p className="mt-2 text-xs text-gray-400">평일 운영 (토·일·공휴일 휴무)</p>
+            <a href="tel:1566-1521" className="mt-4 inline-flex items-center gap-2 bg-amber-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-amber-800 transition-colors">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+              전화하기
+            </a>
+          </div>
+
+          <div className="mt-8 grid sm:grid-cols-2 gap-y-3 gap-x-8 text-sm">
             <div>
               <p className="text-gray-400">주소</p>
-              <p className="text-gray-900 mt-0.5">인천광역시 부평구 일신동 79-25</p>
-            </div>
-            <div>
-              <p className="text-gray-400">대표전화</p>
-              <a href="tel:1566-1521" className="text-gray-900 mt-0.5 hover:text-amber-700">1566-1521</a>
+              <p className="text-gray-700 mt-0.5">인천광역시 부평구 일신동 79-25</p>
             </div>
             <div>
               <p className="text-gray-400">이메일</p>
-              <a href="mailto:ljsgn5958@gmail.com" className="text-gray-900 mt-0.5 hover:text-amber-700">ljsgn5958@gmail.com</a>
+              <a href="mailto:ljsgn5958@gmail.com" className="text-gray-700 mt-0.5 hover:text-amber-700">ljsgn5958@gmail.com</a>
             </div>
             <div>
               <p className="text-gray-400">팩스</p>
-              <p className="text-gray-900 mt-0.5">032-330-4428</p>
+              <p className="text-gray-700 mt-0.5">032-330-4428</p>
             </div>
           </div>
         </div>
