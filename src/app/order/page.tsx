@@ -18,7 +18,7 @@ export default function OrderPage() {
             <a href="/#about" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">회사소개</a>
             <a href="/" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">제품소개</a>
             <span className="text-sm font-bold text-amber-700 border-b-2 border-amber-600 pb-1">발주하기</span>
-            <a href="tel:1566-1521" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">문의하기</a>
+            <a href="/contact" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">문의하기</a>
           </nav>
           <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden p-2">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

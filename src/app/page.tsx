@@ -99,7 +99,7 @@ export default function HomePage() {
             <button onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })} className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">회사소개</button>
             <span className="text-sm font-bold text-amber-700 border-b-2 border-amber-600 pb-1">제품소개</span>
             <a href="/order" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">발주하기</a>
-            <a href="tel:1566-1521" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">문의하기</a>
+            <a href="/contact" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">문의하기</a>
           </nav>
           {/* 모바일 햄버거 */}
           <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden p-2">
