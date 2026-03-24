@@ -11,8 +11,6 @@ function ProductDetail() {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [imgError, setImgError] = useState(false);
-  const [showQR, setShowQR] = useState(false);
-  const [qrDataUrl, setQrDataUrl] = useState('');
 
   useEffect(() => {
     if (code) {
@@ -27,22 +25,6 @@ function ProductDetail() {
     const data = await fetchProductByCode(productCode);
     setProduct(data);
     setLoading(false);
-  }
-
-  async function generateQR() {
-    try {
-      const QRCode = (await import('qrcode')).default;
-      const url = window.location.href;
-      const dataUrl = await QRCode.toDataURL(url, {
-        width: 256,
-        margin: 2,
-        color: { dark: '#34261A', light: '#FFFFFF' },
-      });
-      setQrDataUrl(dataUrl);
-      setShowQR(true);
-    } catch {
-      alert('QR 코드 생성 실패');
-    }
   }
 
   if (loading) {
@@ -149,51 +131,8 @@ function ProductDetail() {
             <InfoRow label="단위" value={product.unit} />
             <InfoRow label="매입처" value={product.vendor_name} />
           </div>
-
-          {/* QR 버튼 */}
-          <div className="mt-6 no-print">
-            <button
-              onClick={generateQR}
-              className="w-full py-3 bg-brand-400 hover:bg-brand-500 text-white rounded-xl font-medium transition-colors text-sm"
-            >
-              QR 코드 생성
-            </button>
-          </div>
         </div>
       </div>
-
-      {/* QR 모달 */}
-      {showQR && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 no-print"
-             onClick={() => setShowQR(false)}>
-          <div className="bg-white rounded-2xl p-6 max-w-xs w-full mx-4 text-center"
-               onClick={e => e.stopPropagation()}>
-            <h3 className="font-bold text-gray-800 mb-1">{product.name}</h3>
-            <p className="text-xs text-gray-400 mb-4">{product.code}</p>
-            {qrDataUrl && (
-              <img src={qrDataUrl} alt="QR Code" className="mx-auto w-48 h-48" />
-            )}
-            <p className="text-xs text-gray-400 mt-3 break-all">
-              {typeof window !== 'undefined' ? window.location.href : ''}
-            </p>
-            <div className="mt-4 flex gap-2">
-              <a
-                href={qrDataUrl}
-                download={`QR_${product.code}.png`}
-                className="flex-1 py-2 bg-brand-400 text-white rounded-lg text-sm font-medium hover:bg-brand-500"
-              >
-                다운로드
-              </a>
-              <button
-                onClick={() => setShowQR(false)}
-                className="flex-1 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-200"
-              >
-                닫기
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
