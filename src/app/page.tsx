@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { fetchProducts, getImageUrl, formatPrice, Product } from '@/lib/supabase';
 
 const CATEGORY_ICONS: Record<string, string> = {
@@ -18,11 +18,10 @@ export default function HomePage() {
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
   const [showPrice, setShowPrice] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const observerRef = useRef<HTMLDivElement>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     loadProducts();
-    // URL에 ?price=on 이면 가격 표시
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       if (params.get('price') === 'on') setShowPrice(true);
@@ -33,7 +32,6 @@ export default function HomePage() {
     setLoading(true);
     const data = await fetchProducts();
     setProducts(data);
-    // minor_name 기준 카테고리
     const minors = new Set(data.map(p => p.minor_name).filter(Boolean));
     setAllMinorCategories(Array.from(minors).sort());
     setLoading(false);
@@ -48,13 +46,10 @@ export default function HomePage() {
   const visible = filtered.slice(0, visibleCount);
   const hasMore = visibleCount < filtered.length;
 
-  // 무한스크롤
   const lastItemRef = useCallback((node: HTMLDivElement | null) => {
     if (!node || !hasMore) return;
     const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        setVisibleCount(prev => prev + ITEMS_PER_PAGE);
-      }
+      if (entries[0].isIntersecting) setVisibleCount(prev => prev + ITEMS_PER_PAGE);
     }, { threshold: 0.1 });
     observer.observe(node);
     return () => observer.disconnect();
@@ -63,7 +58,7 @@ export default function HomePage() {
   function handleCategoryChange(cat: string) {
     setActiveCategory(cat);
     setVisibleCount(ITEMS_PER_PAGE);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setMenuOpen(false);
   }
 
   function handleSearch(value: string) {
@@ -72,146 +67,180 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* 헤더 */}
-      <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-xl font-bold text-gray-900 tracking-tight">지구농산 (주)</span>
-          </div>
-          <a href="tel:061-000-0000" className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-900 transition-colors">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-            <span className="hidden sm:inline">문의하기</span>
+    <div className="min-h-screen bg-white">
+      {/* ===== 상단 네비게이션 ===== */}
+      <header className="border-b border-gray-200 sticky top-0 z-50 bg-white">
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
+          <a href="/" className="text-xl font-black text-red-600 tracking-tight">
+            지구농산
           </a>
+          {/* PC 메뉴 */}
+          <nav className="hidden md:flex items-center gap-8">
+            <a href="#about" className="text-sm font-medium text-gray-700 hover:text-red-600 transition-colors">회사소개</a>
+            <span className="text-sm font-bold text-red-600 border-b-2 border-red-600 pb-1">제품소개</span>
+            <a href="tel:061-000-0000" className="text-sm font-medium text-gray-700 hover:text-red-600 transition-colors">문의하기</a>
+          </nav>
+          {/* 모바일 햄버거 */}
+          <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden p-2">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={menuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
+            </svg>
+          </button>
         </div>
+        {/* 모바일 드롭다운 메뉴 */}
+        {menuOpen && (
+          <div className="md:hidden bg-white border-t border-gray-100 shadow-lg">
+            <a href="#about" onClick={() => setMenuOpen(false)} className="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-50">회사소개</a>
+            <span className="block px-6 py-3 text-sm font-bold text-red-600 bg-red-50">제품소개</span>
+            <a href="tel:061-000-0000" onClick={() => setMenuOpen(false)} className="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-50">문의하기</a>
+          </div>
+        )}
       </header>
 
-      {/* 히어로 배너 */}
-      <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
-        <div className="max-w-6xl mx-auto px-4 py-10 md:py-16">
-          <h1 className="text-2xl md:text-4xl font-bold leading-tight">
-            신선한 식자재를<br />공급합니다
-          </h1>
-          <p className="mt-3 text-gray-400 text-sm md:text-base max-w-md">
-            농산품 · 수산품 · 축산품 · 공산품<br />
-            300여 가지 품목을 취급하고 있습니다.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            {Object.entries(CATEGORY_ICONS).map(([name, icon]) => {
-              const count = products.filter(p => p.major_name === name).length;
-              return (
-                <div key={name} className="flex items-center gap-2 bg-white/10 backdrop-blur rounded-lg px-3 py-2 text-sm">
-                  <span className="text-lg">{icon}</span>
-                  <span className="text-white/80">{name}</span>
-                  <span className="text-white/40 text-xs">{count}</span>
-                </div>
-              );
-            })}
-          </div>
-          <div className="mt-6 flex gap-3">
-            <a href="tel:061-000-0000" className="inline-flex items-center gap-2 bg-white text-gray-900 px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-              전화 문의
-            </a>
-          </div>
+      {/* ===== 브레드크럼 + 타이틀 ===== */}
+      <div className="max-w-7xl mx-auto px-6 pt-8 pb-4">
+        <div className="text-xs text-gray-400 mb-4">
+          <span>🏠</span> &gt; <span>제품소개</span>
         </div>
-      </section>
+        <h1 className="text-3xl md:text-4xl font-black text-gray-900">제품소개</h1>
+      </div>
 
-      {/* 검색 + 카테고리 */}
-      <div className="sticky top-[52px] z-40 bg-white border-b border-gray-100 shadow-sm">
-        <div className="max-w-6xl mx-auto px-4">
-          {/* 검색바 */}
-          <div className="py-3">
-            <div className="relative">
-              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-              <input
-                type="text"
-                placeholder="품목명으로 검색"
-                value={search}
-                onChange={e => handleSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent placeholder:text-gray-400"
-              />
-              {search && (
-                <button onClick={() => handleSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/></svg>
-                </button>
-              )}
-            </div>
-          </div>
-          {/* 카테고리 탭 */}
-          <div className="flex gap-2 pb-3 overflow-x-auto scrollbar-hide">
+      {/* ===== 카테고리 필터 바 (빙그레 스타일) ===== */}
+      <div className="sticky top-16 z-40 bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide">
+            {/* 전체 메뉴 아이콘 */}
             <button
               onClick={() => handleCategoryChange('전체')}
-              className={`shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-all ${activeCategory === '전체' ? 'cat-tab-active' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+              className={`shrink-0 flex items-center justify-center w-10 h-10 rounded-full border-2 mr-2 transition-all ${activeCategory === '전체' ? 'border-red-600 text-red-600' : 'border-gray-300 text-gray-400 hover:border-gray-500'}`}
             >
-              전체 ({products.length})
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/></svg>
             </button>
-            {allMinorCategories.map(cat => {
-              const count = products.filter(p => p.minor_name === cat).length;
-              return (
-                <button
-                  key={cat}
-                  onClick={() => handleCategoryChange(cat)}
-                  className={`shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-all whitespace-nowrap ${activeCategory === cat ? 'cat-tab-active' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
-                >
-                  {cat} ({count})
-                </button>
-              );
-            })}
+            {allMinorCategories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => handleCategoryChange(cat)}
+                className={`shrink-0 px-5 py-3 text-sm whitespace-nowrap transition-all border-b-3 ${activeCategory === cat ? 'cat-tab-active' : 'text-gray-500 border-transparent hover:text-gray-900'}`}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* 품목 수 */}
-      <div className="max-w-6xl mx-auto px-4 pt-4 pb-2">
-        <p className="text-xs text-gray-400">{filtered.length}개 품목</p>
+      {/* ===== 검색바 ===== */}
+      <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="flex items-center gap-3">
+          <div className="relative flex-1 max-w-md">
+            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input
+              type="text"
+              placeholder="품목명으로 검색"
+              value={search}
+              onChange={e => handleSearch(e.target.value)}
+              className="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+            />
+            {search && (
+              <button onClick={() => handleSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            )}
+          </div>
+          <span className="text-sm text-gray-400">{filtered.length}개 품목</span>
+        </div>
       </div>
 
-      {/* 로딩 */}
+      {/* ===== 로딩 ===== */}
       {loading && (
         <div className="flex justify-center py-20">
-          <div className="animate-spin w-8 h-8 border-3 border-gray-200 border-t-gray-900 rounded-full" />
+          <div className="animate-spin w-8 h-8 border-3 border-gray-200 border-t-red-600 rounded-full" />
         </div>
       )}
 
-      {/* 품목 그리드 */}
+      {/* ===== 품목 그리드 (빙그레 스타일: 4열, 큰 이미지, 하단 품목명) ===== */}
       {!loading && (
-        <div className="max-w-6xl mx-auto px-4 pb-20">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+        <div className="max-w-7xl mx-auto px-6 pb-20">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {visible.map((product, idx) => (
-              <div
-                key={product.code}
-                ref={idx === visible.length - 1 ? lastItemRef : undefined}
-              >
-                <ProductCard
-                  product={product}
-                  showPrice={showPrice}
-                  onClick={() => setSelectedProduct(product)}
-                />
+              <div key={product.code} ref={idx === visible.length - 1 ? lastItemRef : undefined}>
+                <ProductCard product={product} showPrice={showPrice} onClick={() => setSelectedProduct(product)} />
               </div>
             ))}
           </div>
 
           {hasMore && (
-            <div className="flex justify-center py-8">
-              <div className="animate-spin w-6 h-6 border-2 border-gray-200 border-t-gray-900 rounded-full" />
+            <div className="flex justify-center py-10">
+              <div className="animate-spin w-6 h-6 border-2 border-gray-200 border-t-red-600 rounded-full" />
             </div>
           )}
 
-          {!loading && filtered.length === 0 && (
+          {filtered.length === 0 && (
             <div className="text-center py-20">
-              <p className="text-gray-400 text-sm">검색 결과가 없습니다.</p>
+              <p className="text-gray-400">검색 결과가 없습니다.</p>
             </div>
           )}
         </div>
       )}
 
-      {/* 푸터 */}
+      {/* ===== 회사소개 섹션 ===== */}
+      <section id="about" className="bg-gray-50 border-t border-gray-200">
+        <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
+          <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-6">회사소개</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <p className="text-gray-600 leading-relaxed">
+                <strong className="text-gray-900">지구농산 (주)</strong>는 신선하고 안전한 식자재를 공급하는 전문 유통업체입니다.
+                농산품, 수산품, 축산품, 공산품 등 300여 가지 품목을 취급하며,
+                식당 및 급식업체에 최적의 식자재 솔루션을 제공합니다.
+              </p>
+              <div className="mt-6 grid grid-cols-2 gap-4">
+                {Object.entries(CATEGORY_ICONS).map(([name, icon]) => {
+                  const count = products.filter(p => p.major_name === name).length;
+                  return (
+                    <div key={name} className="flex items-center gap-3 bg-white rounded-xl p-4 border border-gray-100">
+                      <span className="text-2xl">{icon}</span>
+                      <div>
+                        <p className="text-sm font-bold text-gray-900">{name}</p>
+                        <p className="text-xs text-gray-400">{count}개 품목</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="bg-white rounded-xl p-6 border border-gray-100">
+              <h3 className="font-bold text-gray-900 mb-4">연락처</h3>
+              <div className="space-y-3 text-sm">
+                <div className="flex items-start gap-3">
+                  <svg className="w-5 h-5 text-red-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                  <div>
+                    <p className="text-gray-500">전화</p>
+                    <a href="tel:061-000-0000" className="text-gray-900 font-medium hover:text-red-600">061-000-0000</a>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <svg className="w-5 h-5 text-red-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                  <div>
+                    <p className="text-gray-500">주소</p>
+                    <p className="text-gray-900 font-medium">전라남도 여수시</p>
+                  </div>
+                </div>
+              </div>
+              <a href="tel:061-000-0000" className="mt-6 w-full flex items-center justify-center gap-2 bg-red-600 text-white py-3 rounded-xl text-sm font-bold hover:bg-red-700 transition-colors">
+                📞 전화 문의하기
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 푸터 ===== */}
       <footer className="bg-gray-900 text-gray-400 no-print">
-        <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="flex flex-col md:flex-row md:justify-between gap-4">
             <div>
-              <h3 className="text-white font-bold text-lg">지구농산 (주)</h3>
+              <h3 className="text-white font-black text-lg">지구농산 (주)</h3>
               <p className="text-sm mt-1">신선한 식자재를 공급합니다.</p>
             </div>
             <div className="text-sm space-y-1">
@@ -225,13 +254,9 @@ export default function HomePage() {
         </div>
       </footer>
 
-      {/* 상세 모달 */}
+      {/* ===== 상세 모달 (빙그레 스타일: 좌 이미지 + 우 정보) ===== */}
       {selectedProduct && (
-        <ProductModal
-          product={selectedProduct}
-          showPrice={showPrice}
-          onClose={() => setSelectedProduct(null)}
-        />
+        <ProductModal product={selectedProduct} showPrice={showPrice} onClose={() => setSelectedProduct(null)} />
       )}
     </div>
   );
@@ -244,38 +269,33 @@ function ProductCard({ product, showPrice, onClick }: { product: Product; showPr
   const icon = CATEGORY_ICONS[product.major_name] || '📦';
 
   return (
-    <div
-      onClick={onClick}
-      className="product-card bg-white rounded-2xl overflow-hidden border border-gray-100 cursor-pointer"
-    >
-      <div className="aspect-square bg-gray-50 flex items-center justify-center overflow-hidden relative">
+    <div onClick={onClick} className="product-card cursor-pointer group">
+      {/* 이미지 영역 */}
+      <div className="aspect-square bg-gray-50 rounded-2xl overflow-hidden flex items-center justify-center relative border border-gray-100">
         {imageUrl && !imgError ? (
           <>
-            {!imgLoaded && (
-              <div className="absolute inset-0 bg-gray-100 animate-pulse" />
-            )}
+            {!imgLoaded && <div className="absolute inset-0 bg-gray-100 animate-pulse" />}
             <img
               src={imageUrl}
               alt={product.name}
               loading="lazy"
               onLoad={() => setImgLoaded(true)}
               onError={() => setImgError(true)}
-              className={`w-full h-full object-contain p-3 ${imgLoaded ? 'img-fade' : 'opacity-0'}`}
+              className={`card-img w-full h-full object-contain p-4 ${imgLoaded ? 'img-fade' : 'opacity-0'}`}
             />
           </>
         ) : (
-          <span className="text-4xl">{icon}</span>
+          <span className="text-5xl opacity-30">{icon}</span>
         )}
       </div>
-      <div className="p-3">
-        <h3 className="text-sm font-semibold text-gray-900 line-clamp-2 leading-snug min-h-[2.5em]">
-          {product.name}
-        </h3>
-        <p className="text-xs text-gray-400 mt-1 truncate">
-          {product.spec}{product.unit ? ` · ${product.unit}` : ''}
-        </p>
+      {/* 품목명 (빙그레 스타일: 이미지 아래 중앙 정렬) */}
+      <div className="mt-3 text-center px-1">
+        <h3 className="text-sm font-medium text-gray-900 line-clamp-2 leading-snug">{product.name}</h3>
+        {product.spec && (
+          <p className="text-xs text-gray-400 mt-0.5 truncate">{product.spec}</p>
+        )}
         {showPrice && product.sell > 0 && (
-          <p className="text-sm font-bold text-gray-900 mt-1.5">{formatPrice(product.sell)}</p>
+          <p className="text-sm font-bold text-red-600 mt-1">{formatPrice(product.sell)}</p>
         )}
       </div>
     </div>
@@ -289,94 +309,82 @@ function ProductModal({ product, showPrice, onClose }: { product: Product; showP
 
   let supplyPrice = 0;
   let vat = 0;
-  if (product.sell > 0) {
-    if (product.tax === '과세') {
-      supplyPrice = Math.round(product.sell / 1.1);
-      vat = product.sell - supplyPrice;
-    } else {
-      supplyPrice = product.sell;
-    }
+  if (product.sell > 0 && product.tax === '과세') {
+    supplyPrice = Math.round(product.sell / 1.1);
+    vat = product.sell - supplyPrice;
+  } else {
+    supplyPrice = product.sell;
   }
 
   return (
-    <div className="fixed inset-0 bg-black/60 z-50 flex items-end md:items-center justify-center" onClick={onClose}>
-      <div
-        className="bg-white w-full md:max-w-lg md:rounded-2xl rounded-t-2xl max-h-[90vh] overflow-y-auto"
-        onClick={e => e.stopPropagation()}
-      >
-        {/* 닫기 핸들 (모바일) */}
-        <div className="flex justify-center pt-2 pb-1 md:hidden">
-          <div className="w-10 h-1 bg-gray-300 rounded-full" />
+    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={onClose}>
+      <div className="bg-white w-full max-w-3xl rounded-2xl overflow-hidden max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+        {/* 닫기 */}
+        <div className="flex justify-end p-4">
+          <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
         </div>
 
-        {/* 이미지 */}
-        <div className="aspect-square bg-gray-50 flex items-center justify-center">
-          {imageUrl && !imgError ? (
-            <img
-              src={imageUrl}
-              alt={product.name}
-              onError={() => setImgError(true)}
-              className="w-full h-full object-contain p-8"
-            />
-          ) : (
-            <span className="text-6xl">{icon}</span>
-          )}
-        </div>
-
-        {/* 정보 */}
-        <div className="p-5">
-          <div className="flex gap-2 mb-2">
-            {product.major_name && (
-              <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">{product.major_name}</span>
-            )}
-            {product.minor_name && (
-              <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">{product.minor_name}</span>
+        <div className="md:flex">
+          {/* 좌: 이미지 (빙그레 스타일) */}
+          <div className="md:w-1/2 bg-gray-50 flex items-center justify-center p-8 aspect-square md:aspect-auto">
+            {imageUrl && !imgError ? (
+              <img src={imageUrl} alt={product.name} onError={() => setImgError(true)} className="max-w-full max-h-80 object-contain" />
+            ) : (
+              <span className="text-7xl opacity-30">{icon}</span>
             )}
           </div>
 
-          <h2 className="text-xl font-bold text-gray-900">{product.name}</h2>
-          <p className="text-sm text-gray-500 mt-1">{product.spec}{product.unit ? ` · ${product.unit}` : ''}</p>
-
-          {/* 상세 정보 */}
-          <div className="mt-4 space-y-2.5">
-            <DetailRow label="품목코드" value={product.code} />
-            <DetailRow label="규격" value={product.spec} />
-            <DetailRow label="단위" value={product.unit} />
-            <DetailRow label="매입처" value={product.vendor_name} />
-            <DetailRow label="과세구분" value={product.tax} />
-          </div>
-
-          {/* 가격 */}
-          {showPrice && product.sell > 0 && (
-            <div className="mt-4 p-4 bg-gray-50 rounded-xl">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-500">판매단가</span>
-                <span className="text-xl font-bold text-gray-900">{formatPrice(product.sell)}</span>
-              </div>
-              {product.tax === '과세' && (
-                <div className="mt-2 pt-2 border-t border-gray-200 text-xs text-gray-400 space-y-1">
-                  <div className="flex justify-between"><span>공급가액</span><span>{supplyPrice.toLocaleString()}원</span></div>
-                  <div className="flex justify-between"><span>부가세</span><span>{vat.toLocaleString()}원</span></div>
-                </div>
-              )}
+          {/* 우: 정보 (빙그레 스타일) */}
+          <div className="md:w-1/2 p-6 md:p-8">
+            <div className="flex gap-2 mb-3">
+              {product.major_name && <span className="text-xs px-2 py-0.5 rounded bg-gray-100 text-gray-500">{product.major_name}</span>}
+              {product.minor_name && <span className="text-xs px-2 py-0.5 rounded bg-gray-100 text-gray-500">{product.minor_name}</span>}
             </div>
-          )}
 
-          {/* 문의 버튼 */}
-          <div className="mt-5 flex gap-3">
-            <a
-              href="tel:061-000-0000"
-              className="flex-1 flex items-center justify-center gap-2 bg-gray-900 text-white py-3 rounded-xl text-sm font-medium hover:bg-gray-800 transition-colors"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-              전화 문의
+            <h2 className="text-2xl font-black text-gray-900">{product.name}</h2>
+
+            {/* 규격 태그 (빙그레 용량 스타일) */}
+            {product.spec && (
+              <div className="mt-3">
+                <span className="text-xs text-gray-400">규격</span>
+                <span className="ml-3 inline-block px-4 py-1.5 border-2 border-red-500 text-red-500 rounded-full text-sm font-bold">{product.spec}</span>
+              </div>
+            )}
+
+            {/* 상세 테이블 */}
+            <div className="mt-6 border-t border-gray-200">
+              <table className="w-full text-sm">
+                <tbody>
+                  <DetailRow label="품목코드" value={product.code} />
+                  <DetailRow label="단위" value={product.unit} />
+                  <DetailRow label="매입처" value={product.vendor_name} />
+                  <DetailRow label="과세구분" value={product.tax} />
+                </tbody>
+              </table>
+            </div>
+
+            {/* 가격 */}
+            {showPrice && product.sell > 0 && (
+              <div className="mt-4 p-4 bg-red-50 rounded-xl">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-500">판매단가</span>
+                  <span className="text-xl font-black text-red-600">{formatPrice(product.sell)}</span>
+                </div>
+                {product.tax === '과세' && (
+                  <div className="mt-2 pt-2 border-t border-red-100 text-xs text-gray-400 space-y-1">
+                    <div className="flex justify-between"><span>공급가액</span><span>{supplyPrice.toLocaleString()}원</span></div>
+                    <div className="flex justify-between"><span>부가세</span><span>{vat.toLocaleString()}원</span></div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* 문의 버튼 */}
+            <a href="tel:061-000-0000" className="mt-6 w-full flex items-center justify-center gap-2 bg-red-600 text-white py-3.5 rounded-xl text-sm font-bold hover:bg-red-700 transition-colors">
+              📞 문의하기
             </a>
-            <button
-              onClick={onClose}
-              className="px-5 py-3 bg-gray-100 text-gray-600 rounded-xl text-sm font-medium hover:bg-gray-200 transition-colors"
-            >
-              닫기
-            </button>
           </div>
         </div>
       </div>
@@ -387,9 +395,9 @@ function ProductModal({ product, showPrice, onClose }: { product: Product; showP
 function DetailRow({ label, value }: { label: string; value: string }) {
   if (!value) return null;
   return (
-    <div className="flex justify-between text-sm">
-      <span className="text-gray-400">{label}</span>
-      <span className="text-gray-700 font-medium">{value}</span>
-    </div>
+    <tr className="border-b border-gray-100">
+      <td className="py-3 text-gray-400 w-24">{label}</td>
+      <td className="py-3 text-gray-900 font-medium">{value}</td>
+    </tr>
   );
 }
