@@ -203,58 +203,6 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* ===== 회사소개 섹션 ===== */}
-      <section id="about" className="bg-gray-50 border-t border-gray-200 scroll-mt-32">
-        <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
-          <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-6">회사소개</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <p className="text-gray-600 leading-relaxed">
-                식당과 급식현장의 식탁을 함께 채워온 <strong className="text-gray-900" style={{ fontFamily: "'EBSHunminjeongeum', 'Jua', sans-serif" }}>지구농산</strong>입니다.
-                <br />쌀·잡곡·계란·김치·반찬·기름 등 300여 가지 품목을 합리적인 가격으로 당일 공급합니다.
-                <br />주문부터 배송까지 친절하게 응대하며, 오랜 거래처와 쌓아온 신뢰로 내일도 찾아가겠습니다.
-              </p>
-            </div>
-            <div className="bg-white rounded-xl p-6 border border-gray-100">
-              <h3 className="font-bold text-gray-900 mb-4">연락처</h3>
-              <div className="space-y-3 text-sm">
-                <div className="flex items-start gap-3">
-                  <svg className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                  <div>
-                    <p className="text-gray-500">전화</p>
-                    <a href="tel:1566-1521" className="text-gray-900 font-medium hover:text-amber-700">1566-1521</a>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <svg className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                  <div>
-                    <p className="text-gray-500">주소</p>
-                    <p className="text-gray-900 font-medium text-xs">인천광역시 부평구 일신동 79-25</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <svg className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                  <div>
-                    <p className="text-gray-500">이메일</p>
-                    <a href="mailto:ljsgn5958@gmail.com" className="text-gray-900 font-medium hover:text-amber-700 text-xs">ljsgn5958@gmail.com</a>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <svg className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                  <div>
-                    <p className="text-gray-500">팩스</p>
-                    <p className="text-gray-900 font-medium">032-330-4428</p>
-                  </div>
-                </div>
-              </div>
-              <a href="tel:1566-1521" className="mt-6 w-full flex items-center justify-center gap-2 bg-amber-700 text-white py-3 rounded-xl text-sm font-bold hover:bg-amber-800 transition-colors">
-                전화 문의하기
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ===== 푸터 ===== */}
       <footer className="bg-gray-900 text-gray-400 no-print">
         <div className="max-w-7xl mx-auto px-6 py-8">
