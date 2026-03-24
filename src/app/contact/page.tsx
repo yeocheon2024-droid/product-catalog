@@ -51,96 +51,71 @@ export default function ContactPage() {
         )}
       </header>
 
-      {/* ===== 타이틀 ===== */}
-      <div className="max-w-4xl mx-auto px-6 pt-10 pb-6">
-        <h1 className="text-3xl md:text-4xl font-black text-gray-900">문의하기</h1>
-        <p className="mt-2 text-gray-500">전화 한 통이면 신선한 식자재를 당일 배송해드립니다.</p>
-      </div>
+      {/* ===== 타이틀 + 대표번호 ===== */}
+      <div className="max-w-3xl mx-auto px-6 py-12 md:py-16">
+        <h1 className="text-2xl md:text-3xl font-black text-gray-900">문의하기</h1>
+        <p className="mt-2 text-gray-500 text-sm">주문 및 거래 관련 문의는 대표번호로 연락 부탁드립니다.</p>
 
-      {/* ===== 대표번호 CTA ===== */}
-      <div className="max-w-4xl mx-auto px-6 pb-10">
-        <div className="bg-amber-50 rounded-2xl p-8 text-center border border-amber-100">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-amber-700 rounded-full mb-4">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-          </div>
-          <p className="text-sm text-amber-800 font-medium mb-1">대표전화</p>
-          <a href="tel:1566-1521" className="text-4xl md:text-5xl font-black text-amber-900 hover:text-amber-700 transition-colors">
+        <div className="mt-8 border border-gray-200 rounded-xl p-6">
+          <p className="text-xs text-gray-400 mb-1">대표전화</p>
+          <a href="tel:1566-1521" className="text-3xl font-black text-gray-900 hover:text-amber-700 transition-colors">
             1566-1521
           </a>
-          <p className="mt-3 text-sm text-gray-500">평일 · 토요일 새벽배송 운영</p>
-          <a href="tel:1566-1521" className="mt-6 inline-flex items-center justify-center gap-2 bg-amber-700 text-white px-8 py-3.5 rounded-xl text-sm font-bold hover:bg-amber-800 transition-colors">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-            전화 문의하기
+          <p className="mt-2 text-sm text-gray-400">평일 운영 (토·일·공휴일 휴무)</p>
+          <a href="tel:1566-1521" className="mt-5 inline-flex items-center gap-2 bg-amber-700 text-white px-6 py-3 rounded-xl text-sm font-bold hover:bg-amber-800 transition-colors">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            전화하기
           </a>
         </div>
       </div>
 
-      {/* ===== 당일배송 가능 지역 ===== */}
-      <section className="bg-gray-50 border-t border-gray-200">
-        <div className="max-w-4xl mx-auto px-6 py-16">
-          <div className="text-center mb-10">
-            <div className="inline-flex items-center justify-center w-12 h-12 bg-amber-100 rounded-full mb-4">
-              <svg className="w-6 h-6 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-            </div>
-            <h2 className="text-2xl md:text-3xl font-black text-gray-900">당일배송 가능 지역</h2>
-            <p className="mt-2 text-gray-500">아래 지역은 당일 주문·당일 배송이 가능합니다.</p>
-          </div>
+      {/* ===== 배송 가능 지역 ===== */}
+      <section className="border-t border-gray-100">
+        <div className="max-w-3xl mx-auto px-6 py-12 md:py-16">
+          <h2 className="text-xl font-bold text-gray-900">평일 배송 가능 지역</h2>
+          <p className="mt-1 text-sm text-gray-400">아래 지역은 평일 주문 시 당일 배송이 가능합니다.</p>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="mt-8 space-y-6">
             {DELIVERY_AREAS.map(group => (
-              <div key={group.region} className="bg-white rounded-2xl p-6 border border-gray-100">
-                <h3 className="text-lg font-black text-amber-800 mb-4 flex items-center gap-2">
-                  <span className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center text-sm">{group.region === '인천' ? '🏭' : group.region === '경기' ? '🏙' : '🌆'}</span>
-                  {group.region}
-                </h3>
-                <ul className="space-y-2">
+              <div key={group.region}>
+                <h3 className="text-sm font-bold text-amber-800 mb-3">{group.region}</h3>
+                <div className="flex flex-wrap gap-2">
                   {group.areas.map(area => (
-                    <li key={area} className="flex items-center gap-2 text-sm text-gray-700">
-                      <svg className="w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
+                    <span key={area} className="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-700">
                       {area}
-                    </li>
+                    </span>
                   ))}
-                </ul>
+                </div>
               </div>
             ))}
           </div>
 
-          <p className="mt-8 text-center text-sm text-gray-400">
-            위 지역 외 배송 문의는 대표번호로 연락 부탁드립니다.
+          <p className="mt-8 text-xs text-gray-400">
+            상기 지역 외 배송은 대표번호로 문의해 주세요.
           </p>
         </div>
       </section>
 
       {/* ===== 회사 정보 ===== */}
-      <section className="max-w-4xl mx-auto px-6 py-16">
-        <h2 className="text-xl font-bold text-gray-900 mb-6">회사 정보</h2>
-        <div className="grid sm:grid-cols-2 gap-4 text-sm">
-          <div className="flex items-start gap-3">
-            <svg className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      <section className="border-t border-gray-100">
+        <div className="max-w-3xl mx-auto px-6 py-12 md:py-16">
+          <h2 className="text-xl font-bold text-gray-900 mb-6">회사 정보</h2>
+          <div className="grid sm:grid-cols-2 gap-y-4 gap-x-8 text-sm">
             <div>
               <p className="text-gray-400">주소</p>
-              <p className="text-gray-900 font-medium">인천광역시 부평구 일신동 79-25</p>
+              <p className="text-gray-900 mt-0.5">인천광역시 부평구 일신동 79-25</p>
             </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <svg className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
             <div>
               <p className="text-gray-400">대표전화</p>
-              <a href="tel:1566-1521" className="text-gray-900 font-medium hover:text-amber-700">1566-1521</a>
+              <a href="tel:1566-1521" className="text-gray-900 mt-0.5 hover:text-amber-700">1566-1521</a>
             </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <svg className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
             <div>
               <p className="text-gray-400">이메일</p>
-              <a href="mailto:ljsgn5958@gmail.com" className="text-gray-900 font-medium hover:text-amber-700">ljsgn5958@gmail.com</a>
+              <a href="mailto:ljsgn5958@gmail.com" className="text-gray-900 mt-0.5 hover:text-amber-700">ljsgn5958@gmail.com</a>
             </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <svg className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
             <div>
               <p className="text-gray-400">팩스</p>
-              <p className="text-gray-900 font-medium">032-330-4428</p>
+              <p className="text-gray-900 mt-0.5">032-330-4428</p>
             </div>
           </div>
         </div>
@@ -156,7 +131,6 @@ export default function ContactPage() {
                 <h3 className="text-white text-lg tracking-wide" style={{ fontFamily: "'EBSHunminjeongeum', 'Jua', sans-serif" }}>지구농산 농업회사법인</h3>
               </div>
               <p className="text-sm mt-1 text-gray-500">쌀 · 김치 · 계란 · 종합유통</p>
-              <p className="text-sm mt-1">신선한 식자재를 공급합니다.</p>
             </div>
             <div className="text-sm space-y-1">
               <p>대표전화: 1566-1521</p>
