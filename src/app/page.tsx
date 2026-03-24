@@ -112,7 +112,7 @@ export default function HomePage() {
           <div className="md:hidden bg-white border-t border-gray-100 shadow-lg">
             <span className="block px-6 py-3 text-sm font-bold text-amber-700 bg-amber-50">제품소개</span>
             <a href="/order" onClick={() => setMenuOpen(false)} className="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-50">발주하기</a>
-            <a href="tel:1566-1521" onClick={() => setMenuOpen(false)} className="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-50">문의하기</a>
+            <a href="/contact" onClick={() => setMenuOpen(false)} className="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-50">문의하기</a>
           </div>
         )}
       </header>
