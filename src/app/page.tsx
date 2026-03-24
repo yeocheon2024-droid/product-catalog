@@ -96,7 +96,7 @@ export default function HomePage() {
           </a>
           {/* PC 메뉴 */}
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#about" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">회사소개</a>
+            <button onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })} className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">회사소개</button>
             <span className="text-sm font-bold text-amber-700 border-b-2 border-amber-600 pb-1">제품소개</span>
             <a href="tel:1566-1521" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">문의하기</a>
           </nav>
@@ -110,7 +110,7 @@ export default function HomePage() {
         {/* 모바일 드롭다운 메뉴 */}
         {menuOpen && (
           <div className="md:hidden bg-white border-t border-gray-100 shadow-lg">
-            <a href="#about" onClick={() => setMenuOpen(false)} className="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-50">회사소개</a>
+            <button onClick={() => { setMenuOpen(false); document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }); }} className="block w-full text-left px-6 py-3 text-sm text-gray-700 hover:bg-gray-50">회사소개</button>
             <span className="block px-6 py-3 text-sm font-bold text-amber-700 bg-amber-50">제품소개</span>
             <a href="tel:1566-1521" onClick={() => setMenuOpen(false)} className="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-50">문의하기</a>
           </div>
@@ -214,20 +214,6 @@ export default function HomePage() {
                 <br />쌀·잡곡·계란·김치·반찬·기름 등 300여 가지 품목을 합리적인 가격으로 당일 공급합니다.
                 <br />주문부터 배송까지 친절하게 응대하며, 오랜 거래처와 쌓아온 신뢰로 내일도 찾아가겠습니다.
               </p>
-              <div className="mt-6 grid grid-cols-2 gap-4">
-                {Object.entries(CATEGORY_ICONS).map(([name, icon]) => {
-                  const count = products.filter(p => p.major_name === name).length;
-                  return (
-                    <div key={name} className="flex items-center gap-3 bg-white rounded-xl p-4 border border-gray-100">
-                      <span className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center text-amber-700 text-xs font-bold">{name.charAt(0)}</span>
-                      <div>
-                        <p className="text-sm font-bold text-gray-900">{name}</p>
-                        <p className="text-xs text-gray-400">{count}개 품목</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
             </div>
             <div className="bg-white rounded-xl p-6 border border-gray-100">
               <h3 className="font-bold text-gray-900 mb-4">연락처</h3>
@@ -243,7 +229,21 @@ export default function HomePage() {
                   <svg className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                   <div>
                     <p className="text-gray-500">주소</p>
-                    <p className="text-gray-900 font-medium text-xs">인천 부평구 일신동 79-25 물류창고</p>
+                    <p className="text-gray-900 font-medium text-xs">79-25, Ilsin-dong, Bupyeong-gu, Incheon</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <svg className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                  <div>
+                    <p className="text-gray-500">이메일</p>
+                    <a href="mailto:ljsgn5958@gmail.com" className="text-gray-900 font-medium hover:text-amber-700 text-xs">ljsgn5958@gmail.com</a>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <svg className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                  <div>
+                    <p className="text-gray-500">팩스</p>
+                    <p className="text-gray-900 font-medium">032-330-4428</p>
                   </div>
                 </div>
               </div>
@@ -268,8 +268,10 @@ export default function HomePage() {
               <p className="text-sm mt-1">신선한 식자재를 공급합니다.</p>
             </div>
             <div className="text-sm space-y-1">
-              <p>전화: 1566-1521</p>
-              <p className="text-xs">인천 부평구 일신동 79-25 물류창고</p>
+              <p>대표전화: 1566-1521</p>
+              <p>팩스: 032-330-4428</p>
+              <p>이메일: ljsgn5958@gmail.com</p>
+              <p className="text-xs text-gray-500">79-25, Ilsin-dong, Bupyeong-gu, Incheon</p>
             </div>
           </div>
           <div className="mt-6 pt-4 border-t border-gray-800 text-xs text-gray-500">
