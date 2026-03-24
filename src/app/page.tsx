@@ -52,6 +52,14 @@ export default function HomePage() {
     const matchCategory = activeCategory === '전체' || p.minor_name === activeCategory;
     const matchSearch = !search || p.name.toLowerCase().includes(search.toLowerCase()) || p.code.toLowerCase().includes(search.toLowerCase());
     return matchCategory && matchSearch;
+  }).sort((a, b) => {
+    if (activeCategory !== '전체') return 0;
+    const PRIORITY_ORDER = ['쌀', '김치/반찬', '계란'];
+    const aIdx = PRIORITY_ORDER.indexOf(a.minor_name);
+    const bIdx = PRIORITY_ORDER.indexOf(b.minor_name);
+    const aOrder = aIdx !== -1 ? aIdx : 100 - products.filter(p => p.minor_name === a.minor_name).length;
+    const bOrder = bIdx !== -1 ? bIdx : 100 - products.filter(p => p.minor_name === b.minor_name).length;
+    return aOrder - bOrder;
   });
 
   const visible = filtered.slice(0, visibleCount);
