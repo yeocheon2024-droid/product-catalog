@@ -33,7 +33,7 @@ export default function HomePage() {
     const data = await fetchProducts();
     setProducts(data);
     const minors = new Set(data.map(p => p.minor_name).filter(Boolean));
-    const PRIORITY_ORDER = ['쌀', '김치/반찬', '계란'];
+    const PRIORITY_ORDER = ['쌀', '김치/반찬', '계란', '기름/분말'];
     const sorted = Array.from(minors).sort((a, b) => {
       const aIdx = PRIORITY_ORDER.indexOf(a);
       const bIdx = PRIORITY_ORDER.indexOf(b);
@@ -54,7 +54,7 @@ export default function HomePage() {
     return matchCategory && matchSearch;
   }).sort((a, b) => {
     if (activeCategory !== '전체') return 0;
-    const PRIORITY_ORDER = ['쌀', '김치/반찬', '계란'];
+    const PRIORITY_ORDER = ['쌀', '김치/반찬', '계란', '기름/분말'];
     const aIdx = PRIORITY_ORDER.indexOf(a.minor_name);
     const bIdx = PRIORITY_ORDER.indexOf(b.minor_name);
     const aOrder = aIdx !== -1 ? aIdx : 100 - products.filter(p => p.minor_name === a.minor_name).length;
@@ -381,9 +381,7 @@ function ProductModal({ product, showPrice, onClose }: { product: Product; showP
             <div className="mt-6 border-t border-gray-200">
               <table className="w-full text-sm">
                 <tbody>
-                  <DetailRow label="품목코드" value={product.code} />
                   <DetailRow label="단위" value={product.unit} />
-                  <DetailRow label="매입처" value={product.vendor_name} />
                   <DetailRow label="과세구분" value={product.tax} />
                 </tbody>
               </table>

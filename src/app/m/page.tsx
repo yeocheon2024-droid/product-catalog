@@ -106,10 +106,8 @@ function ProductDetail() {
           <p className="text-sm text-gray-500 mt-1">{product.spec}{product.unit ? ` · ${product.unit}` : ''}</p>
 
           <div className="mt-4 space-y-2.5">
-            <DetailRow label="품목코드" value={product.code} />
             <DetailRow label="규격" value={product.spec} />
             <DetailRow label="단위" value={product.unit} />
-            <DetailRow label="매입처" value={product.vendor_name} />
             <DetailRow label="과세구분" value={product.tax} />
           </div>
 
