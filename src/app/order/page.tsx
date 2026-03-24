@@ -203,7 +203,7 @@ export default function OrderPage() {
               <p>대표전화: 1566-1521</p>
               <p>팩스: 032-330-4428</p>
               <p>이메일: ljsgn5958@gmail.com</p>
-              <p className="text-xs text-gray-500">79-25, Ilsin-dong, Bupyeong-gu, Incheon</p>
+              <p className="text-xs text-gray-500">인천광역시 부평구 일신동 79-25</p>
             </div>
           </div>
           <div className="mt-6 pt-4 border-t border-gray-800 text-xs text-gray-500">
