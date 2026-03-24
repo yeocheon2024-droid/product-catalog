@@ -6,7 +6,7 @@ import { Suspense } from 'react';
 import { fetchProductByCode, getImageUrl, formatPrice, Product } from '@/lib/supabase';
 
 const CATEGORY_ICONS: Record<string, string> = {
-  '농산품': '🥬', '수산품': '🐟', '축산품': '🥩', '공산품': '📦',
+  '농산품': '', '수산품': '', '축산품': '', '공산품': '',
 };
 
 function ProductDetail() {
@@ -47,7 +47,7 @@ function ProductDetail() {
   }
 
   const imageUrl = getImageUrl(product);
-  const icon = CATEGORY_ICONS[product.major_name] || '📦';
+  const icon = '';
 
   let supplyPrice = 0;
   let vat = 0;
@@ -86,7 +86,7 @@ function ProductDetail() {
                 className="w-full h-full object-contain p-8"
               />
             ) : (
-              <span className="text-6xl">{icon}</span>
+              <img src="/logo.png" alt="" className="w-20 h-20 opacity-20" />
             )}
           </div>
         </div>
@@ -130,7 +130,7 @@ function ProductDetail() {
 
           <div className="mt-5">
             <a
-              href="tel:061-000-0000"
+              href="tel:1566-1521"
               className="w-full flex items-center justify-center gap-2 bg-gray-900 text-white py-3 rounded-xl text-sm font-medium hover:bg-gray-800 transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>

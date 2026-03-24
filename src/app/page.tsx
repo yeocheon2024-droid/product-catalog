@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { fetchProducts, getImageUrl, formatPrice, Product } from '@/lib/supabase';
 
 const CATEGORY_ICONS: Record<string, string> = {
-  '농산품': '🥬', '수산품': '🐟', '축산품': '🥩', '공산품': '📦',
+  '농산품': '', '수산품': '', '축산품': '', '공산품': '',
 };
 
 const ITEMS_PER_PAGE = 30;
@@ -98,7 +98,7 @@ export default function HomePage() {
           <nav className="hidden md:flex items-center gap-8">
             <a href="#about" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">회사소개</a>
             <span className="text-sm font-bold text-amber-700 border-b-2 border-amber-600 pb-1">제품소개</span>
-            <a href="tel:061-000-0000" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">문의하기</a>
+            <a href="tel:1566-1521" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">문의하기</a>
           </nav>
           {/* 모바일 햄버거 */}
           <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden p-2">
@@ -112,7 +112,7 @@ export default function HomePage() {
           <div className="md:hidden bg-white border-t border-gray-100 shadow-lg">
             <a href="#about" onClick={() => setMenuOpen(false)} className="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-50">회사소개</a>
             <span className="block px-6 py-3 text-sm font-bold text-amber-700 bg-amber-50">제품소개</span>
-            <a href="tel:061-000-0000" onClick={() => setMenuOpen(false)} className="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-50">문의하기</a>
+            <a href="tel:1566-1521" onClick={() => setMenuOpen(false)} className="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-50">문의하기</a>
           </div>
         )}
       </header>
@@ -120,7 +120,7 @@ export default function HomePage() {
       {/* ===== 브레드크럼 + 타이틀 ===== */}
       <div className="max-w-7xl mx-auto px-6 pt-8 pb-4">
         <div className="text-xs text-gray-400 mb-4">
-          <span>🏠</span> &gt; <span>제품소개</span>
+          <span>홈</span> &gt; <span>제품소개</span>
         </div>
         <h1 className="text-3xl md:text-4xl font-black text-gray-900">제품소개</h1>
       </div>
@@ -210,16 +210,16 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <p className="text-gray-600 leading-relaxed">
-                <strong className="text-gray-900" style={{ fontFamily: "'Gowun Dodum', sans-serif" }}>지구농산 농업회사법인</strong>은 신선하고 안전한 식자재를 공급하는 전문 유통업체입니다.
-                농산품, 수산품, 축산품, 공산품 등 300여 가지 품목을 취급하며,
-                식당 및 급식업체에 최적의 식자재 솔루션을 제공합니다.
+                식당과 급식현장의 식탁을 함께 채워온 <strong className="text-gray-900" style={{ fontFamily: "'Gowun Dodum', sans-serif" }}>지구농산</strong>입니다.
+                <br />쌀·잡곡·계란·김치·반찬·기름 등 300여 가지 품목을 합리적인 가격으로 당일 공급합니다.
+                <br />주문부터 배송까지 친절하게 응대하며, 오랜 거래처와 쌓아온 신뢰로 내일도 찾아가겠습니다.
               </p>
               <div className="mt-6 grid grid-cols-2 gap-4">
                 {Object.entries(CATEGORY_ICONS).map(([name, icon]) => {
                   const count = products.filter(p => p.major_name === name).length;
                   return (
                     <div key={name} className="flex items-center gap-3 bg-white rounded-xl p-4 border border-gray-100">
-                      <span className="text-2xl">{icon}</span>
+                      <span className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center text-amber-700 text-xs font-bold">{name.charAt(0)}</span>
                       <div>
                         <p className="text-sm font-bold text-gray-900">{name}</p>
                         <p className="text-xs text-gray-400">{count}개 품목</p>
@@ -236,19 +236,19 @@ export default function HomePage() {
                   <svg className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                   <div>
                     <p className="text-gray-500">전화</p>
-                    <a href="tel:061-000-0000" className="text-gray-900 font-medium hover:text-amber-700">061-000-0000</a>
+                    <a href="tel:1566-1521" className="text-gray-900 font-medium hover:text-amber-700">1566-1521</a>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <svg className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                   <div>
                     <p className="text-gray-500">주소</p>
-                    <p className="text-gray-900 font-medium">전라남도 여수시</p>
+                    <p className="text-gray-900 font-medium text-xs">인천 부평구 일신동 79-25 물류창고</p>
                   </div>
                 </div>
               </div>
-              <a href="tel:061-000-0000" className="mt-6 w-full flex items-center justify-center gap-2 bg-amber-700 text-white py-3 rounded-xl text-sm font-bold hover:bg-amber-800 transition-colors">
-                📞 전화 문의하기
+              <a href="tel:1566-1521" className="mt-6 w-full flex items-center justify-center gap-2 bg-amber-700 text-white py-3 rounded-xl text-sm font-bold hover:bg-amber-800 transition-colors">
+                전화 문의하기
               </a>
             </div>
           </div>
@@ -268,8 +268,8 @@ export default function HomePage() {
               <p className="text-sm mt-1">신선한 식자재를 공급합니다.</p>
             </div>
             <div className="text-sm space-y-1">
-              <p>전화: 061-000-0000</p>
-              <p>주소: 전라남도 여수시</p>
+              <p>전화: 1566-1521</p>
+              <p className="text-xs">인천 부평구 일신동 79-25 물류창고</p>
             </div>
           </div>
           <div className="mt-6 pt-4 border-t border-gray-800 text-xs text-gray-500">
@@ -290,7 +290,7 @@ function ProductCard({ product, showPrice, onClick }: { product: Product; showPr
   const [imgError, setImgError] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
   const imageUrl = getImageUrl(product);
-  const icon = CATEGORY_ICONS[product.major_name] || '📦';
+  const icon = '';
 
   return (
     <div onClick={onClick} className="product-card cursor-pointer group">
@@ -309,7 +309,7 @@ function ProductCard({ product, showPrice, onClick }: { product: Product; showPr
             />
           </>
         ) : (
-          <span className="text-5xl opacity-30">{icon}</span>
+          <img src="/logo.png" alt="" className="w-16 h-16 opacity-20" />
         )}
       </div>
       {/* 품목명 (빙그레 스타일: 이미지 아래 중앙 정렬) */}
@@ -329,7 +329,7 @@ function ProductCard({ product, showPrice, onClick }: { product: Product; showPr
 function ProductModal({ product, showPrice, onClose }: { product: Product; showPrice: boolean; onClose: () => void }) {
   const [imgError, setImgError] = useState(false);
   const imageUrl = getImageUrl(product);
-  const icon = CATEGORY_ICONS[product.major_name] || '📦';
+  const icon = '';
 
   let supplyPrice = 0;
   let vat = 0;
@@ -356,7 +356,7 @@ function ProductModal({ product, showPrice, onClose }: { product: Product; showP
             {imageUrl && !imgError ? (
               <img src={imageUrl} alt={product.name} onError={() => setImgError(true)} className="max-w-full max-h-80 object-contain" />
             ) : (
-              <span className="text-7xl opacity-30">{icon}</span>
+              <img src="/logo.png" alt="" className="w-24 h-24 opacity-20" />
             )}
           </div>
 
@@ -406,8 +406,8 @@ function ProductModal({ product, showPrice, onClose }: { product: Product; showP
             )}
 
             {/* 문의 버튼 */}
-            <a href="tel:061-000-0000" className="mt-6 w-full flex items-center justify-center gap-2 bg-amber-700 text-white py-3.5 rounded-xl text-sm font-bold hover:bg-amber-800 transition-colors">
-              📞 문의하기
+            <a href="tel:1566-1521" className="mt-6 w-full flex items-center justify-center gap-2 bg-amber-700 text-white py-3.5 rounded-xl text-sm font-bold hover:bg-amber-800 transition-colors">
+              문의하기
             </a>
           </div>
         </div>
