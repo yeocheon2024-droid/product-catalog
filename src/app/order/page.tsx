@@ -15,6 +15,7 @@ export default function OrderPage() {
             <span className="text-xl text-amber-900 tracking-wide" style={{ fontFamily: "'EBSHunminjeongeum', 'Jua', sans-serif" }}>지구농산</span>
           </a>
           <nav className="hidden md:flex items-center gap-8">
+            <a href="/#about" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">회사소개</a>
             <a href="/" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">제품소개</a>
             <span className="text-sm font-bold text-amber-700 border-b-2 border-amber-600 pb-1">발주하기</span>
             <a href="tel:1566-1521" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">문의하기</a>
@@ -27,6 +28,7 @@ export default function OrderPage() {
         </div>
         {menuOpen && (
           <div className="md:hidden bg-white border-t border-gray-100 shadow-lg">
+            <a href="/#about" onClick={() => setMenuOpen(false)} className="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-50">회사소개</a>
             <a href="/" onClick={() => setMenuOpen(false)} className="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-50">제품소개</a>
             <span className="block px-6 py-3 text-sm font-bold text-amber-700 bg-amber-50">발주하기</span>
             <a href="tel:1566-1521" onClick={() => setMenuOpen(false)} className="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-50">문의하기</a>
