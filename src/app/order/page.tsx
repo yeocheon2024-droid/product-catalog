@@ -34,52 +34,71 @@ export default function OrderPage() {
         )}
       </header>
 
-      {/* ===== 히어로 섹션 ===== */}
-      <section className="bg-gradient-to-b from-amber-50 to-white">
-        <div className="max-w-4xl mx-auto px-6 py-16 md:py-24 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-amber-100 text-amber-800 rounded-full text-sm font-medium mb-6">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-            스마트 발주 시스템
-          </div>
-          <h1 className="text-3xl md:text-5xl font-black text-gray-900 leading-tight">
-            스마트폰으로 간편하게<br />
-            <span className="text-amber-700">발주하세요</span>
-          </h1>
-          <p className="mt-6 text-gray-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            지구농산은 <strong className="text-gray-700">발주고</strong> 앱을 통해 발주 서비스를 제공합니다.<br />
-            언제 어디서나 스마트폰으로 식자재를 주문하고 관리하세요.
-          </p>
+      {/* ===== 히어로 섹션 (로고 + 앱 스크린샷) ===== */}
+      <section className="bg-gradient-to-br from-blue-50 via-white to-amber-50 overflow-hidden">
+        <div className="max-w-6xl mx-auto px-6 py-12 md:py-20">
+          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
+            {/* 좌: 텍스트 + 버튼 */}
+            <div className="flex-1 text-center md:text-left">
+              <div className="flex items-center gap-3 justify-center md:justify-start mb-6">
+                <img src="/baljugo_logo_cube_01.webp" alt="발주고" className="w-16 h-16 md:w-20 md:h-20 drop-shadow-lg" />
+                <div>
+                  <p className="text-xs text-blue-500 font-semibold tracking-wider uppercase">NO.1 수발주 앱</p>
+                  <h2 className="text-2xl md:text-3xl font-black text-gray-900">발주고</h2>
+                </div>
+              </div>
+              <h1 className="text-3xl md:text-5xl font-black text-gray-900 leading-tight">
+                스마트폰으로 간편하게<br />
+                <span className="text-blue-600">발주하세요</span>
+              </h1>
+              <p className="mt-5 text-gray-500 text-base md:text-lg leading-relaxed">
+                지구농산은 <strong className="text-gray-700">발주고</strong> 앱을 통해 발주 서비스를 제공합니다.<br />
+                누적 다운로드 <strong className="text-blue-600">30만 돌파!</strong> 언제 어디서나 식자재를 주문하세요.
+              </p>
 
-          {/* 앱 다운로드 버튼 */}
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="https://play.google.com/store/apps/details?id=kr.co.Comware.FranzMOMS"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto flex items-center justify-center gap-3 bg-gray-900 text-white px-8 py-4 rounded-2xl hover:bg-gray-800 transition-colors shadow-lg hover:shadow-xl"
-            >
-              <svg className="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 010 1.38l-2.302 2.302L15.396 13l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/>
-              </svg>
-              <div className="text-left">
-                <p className="text-[10px] text-gray-400 leading-none">GET IT ON</p>
-                <p className="text-lg font-bold leading-tight">Google Play</p>
+              {/* 앱 다운로드 버튼 */}
+              <div className="mt-8 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3">
+                <a
+                  href="https://play.google.com/store/apps/details?id=kr.co.Comware.FranzMOMS"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto flex items-center justify-center gap-3 bg-gray-900 text-white px-7 py-3.5 rounded-2xl hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+                >
+                  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 010 1.38l-2.302 2.302L15.396 13l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/>
+                  </svg>
+                  <div className="text-left">
+                    <p className="text-[10px] text-gray-400 leading-none">GET IT ON</p>
+                    <p className="text-base font-bold leading-tight">Google Play</p>
+                  </div>
+                </a>
+                <a
+                  href="https://apps.apple.com/kr/app/%EB%B0%9C%EC%A3%BC%EA%B3%A0/id1290635647"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto flex items-center justify-center gap-3 bg-gray-900 text-white px-7 py-3.5 rounded-2xl hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+                >
+                  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                  </svg>
+                  <div className="text-left">
+                    <p className="text-[10px] text-gray-400 leading-none">Download on the</p>
+                    <p className="text-base font-bold leading-tight">App Store</p>
+                  </div>
+                </a>
               </div>
-            </a>
-            <a
-              href="https://apps.apple.com/kr/app/%EB%B0%9C%EC%A3%BC%EA%B3%A0/id1290635647"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto flex items-center justify-center gap-3 bg-gray-900 text-white px-8 py-4 rounded-2xl hover:bg-gray-800 transition-colors shadow-lg hover:shadow-xl"
-            >
-              <svg className="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-              </svg>
-              <div className="text-left">
-                <p className="text-[10px] text-gray-400 leading-none">Download on the</p>
-                <p className="text-lg font-bold leading-tight">App Store</p>
+            </div>
+
+            {/* 우: 앱 스크린샷 */}
+            <div className="flex-shrink-0 relative">
+              <div className="relative w-64 md:w-80">
+                <img
+                  src="/main-image-01.webp"
+                  alt="발주고 앱 화면"
+                  className="w-full drop-shadow-2xl"
+                />
               </div>
-            </a>
+            </div>
           </div>
         </div>
       </section>
@@ -87,6 +106,7 @@ export default function OrderPage() {
       {/* ===== 발주고 소개 섹션 ===== */}
       <section className="max-w-5xl mx-auto px-6 py-16 md:py-20">
         <div className="text-center mb-12">
+          <img src="/baljugo_logo_cube_01.webp" alt="발주고" className="w-12 h-12 mx-auto mb-4" />
           <h2 className="text-2xl md:text-3xl font-black text-gray-900">발주고란?</h2>
           <p className="mt-3 text-gray-500">NO.1 수발주 프로그램으로 식자재 주문을 혁신합니다</p>
         </div>
@@ -114,7 +134,7 @@ export default function OrderPage() {
       <section className="bg-gray-50 border-t border-gray-200">
         <div className="max-w-4xl mx-auto px-6 py-16 md:py-20">
           <h2 className="text-2xl md:text-3xl font-black text-gray-900 text-center mb-12">이용 방법</h2>
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <StepCard step="1" title="앱 설치" description="구글 플레이스토어 또는 앱스토어에서 '발주고' 검색 후 설치" />
             <StepCard step="2" title="거래처 등록" description="지구농산에 전화 문의하여 거래처 등록 요청" />
             <StepCard step="3" title="품목 확인" description="등록된 품목과 단가를 앱에서 확인" />
@@ -124,40 +144,44 @@ export default function OrderPage() {
       </section>
 
       {/* ===== CTA 섹션 ===== */}
-      <section className="max-w-4xl mx-auto px-6 py-16 md:py-20 text-center">
-        <h2 className="text-2xl md:text-3xl font-black text-gray-900">지금 바로 시작하세요</h2>
-        <p className="mt-3 text-gray-500">앱 설치 후 전화 한 통이면 발주 준비 완료!</p>
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-700" />
+        <div className="relative max-w-4xl mx-auto px-6 py-16 md:py-20 text-center">
+          <img src="/baljugo_logo_cube_01.webp" alt="발주고" className="w-16 h-16 mx-auto mb-6 drop-shadow-lg" />
+          <h2 className="text-2xl md:text-3xl font-black text-white">지금 바로 시작하세요</h2>
+          <p className="mt-3 text-blue-100">앱 설치 후 전화 한 통이면 발주 준비 완료!</p>
 
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a
-            href="https://play.google.com/store/apps/details?id=kr.co.Comware.FranzMOMS"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto flex items-center justify-center gap-3 bg-gray-900 text-white px-8 py-4 rounded-2xl hover:bg-gray-800 transition-colors"
-          >
-            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 010 1.38l-2.302 2.302L15.396 13l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/>
-            </svg>
-            <span className="font-bold">Google Play</span>
-          </a>
-          <a
-            href="https://apps.apple.com/kr/app/%EB%B0%9C%EC%A3%BC%EA%B3%A0/id1290635647"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto flex items-center justify-center gap-3 bg-gray-900 text-white px-8 py-4 rounded-2xl hover:bg-gray-800 transition-colors"
-          >
-            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-            </svg>
-            <span className="font-bold">App Store</span>
-          </a>
-        </div>
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="https://play.google.com/store/apps/details?id=kr.co.Comware.FranzMOMS"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto flex items-center justify-center gap-3 bg-white text-gray-900 px-8 py-4 rounded-2xl hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+            >
+              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 010 1.38l-2.302 2.302L15.396 13l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/>
+              </svg>
+              <span className="font-bold">Google Play</span>
+            </a>
+            <a
+              href="https://apps.apple.com/kr/app/%EB%B0%9C%EC%A3%BC%EA%B3%A0/id1290635647"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto flex items-center justify-center gap-3 bg-white text-gray-900 px-8 py-4 rounded-2xl hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+            >
+              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+              </svg>
+              <span className="font-bold">App Store</span>
+            </a>
+          </div>
 
-        <div className="mt-8">
-          <a href="tel:1566-1521" className="inline-flex items-center gap-2 text-amber-700 font-bold hover:text-amber-800 transition-colors">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-            1566-1521 전화 문의
-          </a>
+          <div className="mt-8">
+            <a href="tel:1566-1521" className="inline-flex items-center gap-2 text-white font-bold hover:text-blue-100 transition-colors">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+              1566-1521 전화 문의
+            </a>
+          </div>
         </div>
       </section>
 
@@ -191,8 +215,8 @@ export default function OrderPage() {
 
 function FeatureCard({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) {
   return (
-    <div className="bg-white border border-gray-100 rounded-2xl p-6 hover:shadow-lg transition-shadow">
-      <div className="w-14 h-14 bg-amber-50 rounded-xl flex items-center justify-center text-amber-700 mb-4">
+    <div className="bg-white border border-gray-100 rounded-2xl p-6 hover:shadow-lg transition-all hover:-translate-y-1">
+      <div className="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 mb-4">
         {icon}
       </div>
       <h3 className="font-bold text-gray-900 mb-2">{title}</h3>
@@ -204,7 +228,7 @@ function FeatureCard({ icon, title, description }: { icon: React.ReactNode; titl
 function StepCard({ step, title, description }: { step: string; title: string; description: string }) {
   return (
     <div className="text-center">
-      <div className="w-12 h-12 bg-amber-700 text-white rounded-full flex items-center justify-center text-lg font-black mx-auto mb-4">
+      <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center text-lg font-black mx-auto mb-4 shadow-lg">
         {step}
       </div>
       <h3 className="font-bold text-gray-900 mb-2">{title}</h3>
