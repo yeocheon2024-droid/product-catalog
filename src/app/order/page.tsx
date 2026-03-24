@@ -12,7 +12,7 @@ export default function OrderPage() {
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
           <a href="/" className="flex items-center gap-2.5">
             <img src="/logo.png" alt="지구농산" className="h-9 w-9" />
-            <span className="text-xl text-amber-900 tracking-wide" style={{ fontFamily: "'Jua', sans-serif" }}>지구농산</span>
+            <span className="text-xl text-amber-900 tracking-wide" style={{ fontFamily: "'EBSHunminjeongeum', 'Jua', sans-serif" }}>지구농산</span>
           </a>
           <nav className="hidden md:flex items-center gap-8">
             <a href="/" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">제품소개</a>
@@ -192,7 +192,7 @@ export default function OrderPage() {
             <div>
               <div className="flex items-center gap-2.5">
                 <img src="/logo.png" alt="지구농산" className="h-8 w-8 brightness-0 invert opacity-80" />
-                <h3 className="text-white text-lg tracking-wide" style={{ fontFamily: "'Jua', sans-serif" }}>지구농산 농업회사법인</h3>
+                <h3 className="text-white text-lg tracking-wide" style={{ fontFamily: "'EBSHunminjeongeum', 'Jua', sans-serif" }}>지구농산 농업회사법인</h3>
               </div>
               <p className="text-sm mt-1 text-gray-500">쌀 · 김치 · 계란 · 종합유통</p>
               <p className="text-sm mt-1">신선한 식자재를 공급합니다.</p>
