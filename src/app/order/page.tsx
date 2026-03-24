@@ -37,7 +37,7 @@ export default function OrderPage() {
       </header>
 
       {/* ===== 히어로 섹션 (로고 + 앱 스크린샷) ===== */}
-      <section className="bg-gradient-to-br from-blue-50 via-white to-amber-50 overflow-hidden">
+      <section className="bg-gradient-to-br from-amber-50 via-white to-orange-50 overflow-hidden">
         <div className="max-w-6xl mx-auto px-6 py-12 md:py-20">
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
             {/* 좌: 텍스트 + 버튼 */}
@@ -45,17 +45,17 @@ export default function OrderPage() {
               <div className="flex items-center gap-3 justify-center md:justify-start mb-6">
                 <img src="/baljugo_logo_cube_01.webp" alt="발주고" className="w-16 h-16 md:w-20 md:h-20 drop-shadow-lg" />
                 <div>
-                  <p className="text-xs text-blue-500 font-semibold tracking-wider uppercase">NO.1 수발주 앱</p>
+                  <p className="text-xs text-amber-600 font-semibold tracking-wider uppercase">NO.1 수발주 앱</p>
                   <h2 className="text-2xl md:text-3xl font-black text-gray-900">발주고</h2>
                 </div>
               </div>
               <h1 className="text-3xl md:text-5xl font-black text-gray-900 leading-tight">
                 스마트폰으로 간편하게<br />
-                <span className="text-blue-600">발주하세요</span>
+                <span className="text-amber-700">발주하세요</span>
               </h1>
               <p className="mt-5 text-gray-500 text-base md:text-lg leading-relaxed">
                 지구농산은 <strong className="text-gray-700">발주고</strong> 앱을 통해 발주 서비스를 제공합니다.<br />
-                누적 다운로드 <strong className="text-blue-600">30만 돌파!</strong> 언제 어디서나 식자재를 주문하세요.
+                누적 다운로드 <strong className="text-amber-700">30만 돌파!</strong> 언제 어디서나 식자재를 주문하세요.
               </p>
 
               {/* 앱 다운로드 버튼 */}
@@ -133,7 +133,7 @@ export default function OrderPage() {
       </section>
 
       {/* ===== 이용 방법 섹션 ===== */}
-      <section className="bg-gray-50 border-t border-gray-200">
+      <section className="bg-amber-50/50 border-t border-amber-100">
         <div className="max-w-4xl mx-auto px-6 py-16 md:py-20">
           <h2 className="text-2xl md:text-3xl font-black text-gray-900 text-center mb-12">이용 방법</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -147,11 +147,11 @@ export default function OrderPage() {
 
       {/* ===== CTA 섹션 ===== */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-700" />
+        <div className="absolute inset-0 bg-gradient-to-r from-amber-700 to-amber-800" />
         <div className="relative max-w-4xl mx-auto px-6 py-16 md:py-20 text-center">
           <img src="/baljugo_logo_cube_01.webp" alt="발주고" className="w-16 h-16 mx-auto mb-6 drop-shadow-lg" />
           <h2 className="text-2xl md:text-3xl font-black text-white">지금 바로 시작하세요</h2>
-          <p className="mt-3 text-blue-100">앱 설치 후 전화 한 통이면 발주 준비 완료!</p>
+          <p className="mt-3 text-amber-100">앱 설치 후 전화 한 통이면 발주 준비 완료!</p>
 
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
@@ -179,7 +179,7 @@ export default function OrderPage() {
           </div>
 
           <div className="mt-8">
-            <a href="tel:1566-1521" className="inline-flex items-center gap-2 text-white font-bold hover:text-blue-100 transition-colors">
+            <a href="tel:1566-1521" className="inline-flex items-center gap-2 text-white font-bold hover:text-amber-100 transition-colors">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
               1566-1521 전화 문의
             </a>
@@ -218,7 +218,7 @@ export default function OrderPage() {
 function FeatureCard({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) {
   return (
     <div className="bg-white border border-gray-100 rounded-2xl p-6 hover:shadow-lg transition-all hover:-translate-y-1">
-      <div className="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 mb-4">
+      <div className="w-14 h-14 bg-amber-50 rounded-xl flex items-center justify-center text-amber-700 mb-4">
         {icon}
       </div>
       <h3 className="font-bold text-gray-900 mb-2">{title}</h3>
@@ -230,7 +230,7 @@ function FeatureCard({ icon, title, description }: { icon: React.ReactNode; titl
 function StepCard({ step, title, description }: { step: string; title: string; description: string }) {
   return (
     <div className="text-center">
-      <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center text-lg font-black mx-auto mb-4 shadow-lg">
+      <div className="w-12 h-12 bg-amber-700 text-white rounded-full flex items-center justify-center text-lg font-black mx-auto mb-4 shadow-lg">
         {step}
       </div>
       <h3 className="font-bold text-gray-900 mb-2">{title}</h3>
