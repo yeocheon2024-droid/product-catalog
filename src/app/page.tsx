@@ -90,9 +90,9 @@ export default function HomePage() {
       {/* ===== 상단 네비게이션 ===== */}
       <header className="border-b border-gray-200 sticky top-0 z-50 bg-white">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
-          <a href="/" className="flex items-center gap-2">
+          <a href="/" className="flex items-center gap-2.5">
             <img src="/logo.png" alt="지구농산" className="h-9 w-9" />
-            <span className="text-xl font-semibold text-amber-800 tracking-tight">지구농산</span>
+            <span className="text-xl text-amber-900 tracking-wide" style={{ fontFamily: "'Gowun Dodum', sans-serif" }}>지구농산</span>
           </a>
           {/* PC 메뉴 */}
           <nav className="hidden md:flex items-center gap-8">
@@ -210,7 +210,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <p className="text-gray-600 leading-relaxed">
-                <strong className="text-gray-900">지구농산 (주)</strong>는 신선하고 안전한 식자재를 공급하는 전문 유통업체입니다.
+                <strong className="text-gray-900" style={{ fontFamily: "'Gowun Dodum', sans-serif" }}>지구농산 농업회사법인</strong>은 신선하고 안전한 식자재를 공급하는 전문 유통업체입니다.
                 농산품, 수산품, 축산품, 공산품 등 300여 가지 품목을 취급하며,
                 식당 및 급식업체에 최적의 식자재 솔루션을 제공합니다.
               </p>
@@ -260,10 +260,11 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="flex flex-col md:flex-row md:justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2.5">
                 <img src="/logo.png" alt="지구농산" className="h-8 w-8 brightness-0 invert opacity-80" />
-                <h3 className="text-white font-semibold text-lg">지구농산 (주)</h3>
+                <h3 className="text-white text-lg tracking-wide" style={{ fontFamily: "'Gowun Dodum', sans-serif" }}>지구농산 농업회사법인</h3>
               </div>
+              <p className="text-sm mt-1 text-gray-500">쌀 · 김치 · 계란 · 종합유통</p>
               <p className="text-sm mt-1">신선한 식자재를 공급합니다.</p>
             </div>
             <div className="text-sm space-y-1">

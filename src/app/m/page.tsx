@@ -67,7 +67,10 @@ function ProductDetail() {
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7"/></svg>
             전체 품목
           </a>
-          <span className="text-sm font-bold text-gray-900">지구농산 (주)</span>
+          <div className="flex items-center gap-1.5">
+            <img src="/logo.png" alt="지구농산" className="h-7 w-7" />
+            <span className="text-sm text-amber-900 tracking-wide" style={{ fontFamily: "'Gowun Dodum', sans-serif" }}>지구농산</span>
+          </div>
         </div>
       </header>
 
