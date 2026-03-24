@@ -37,7 +37,6 @@ export default function ContactPage() {
             <span className="text-xl text-amber-900 tracking-wide" style={{ fontFamily: "'EBSHunminjeongeum', 'Jua', sans-serif" }}>지구농산</span>
           </a>
           <nav className="hidden md:flex items-center gap-8">
-            <a href="/#about" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">회사소개</a>
             <a href="/" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">제품소개</a>
             <a href="/order" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">발주하기</a>
             <span className="text-sm font-bold text-amber-700 border-b-2 border-amber-600 pb-1">문의하기</span>
