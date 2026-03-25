@@ -11,8 +11,8 @@ export default function OrderPage() {
       <header className="border-b border-gray-200 sticky top-0 z-50 bg-white">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
           <a href="/" className="flex items-center gap-2.5">
-            <img src="/logo.png" alt="지구농산" className="h-9 w-9" />
-            <span className="text-xl text-amber-900 tracking-wide" style={{ fontFamily: "'EBSHunminjeongeum', 'Jua', sans-serif" }}>지구농산</span>
+            <img src="/logo.png" alt="지구농산" className="h-11 w-11" />
+            <span className="text-2xl font-extrabold text-amber-900 tracking-wide" style={{ fontFamily: "'EBSHunminjeongeum', 'Jua', sans-serif" }}>지구농산</span>
           </a>
           <nav className="hidden md:flex items-center gap-8">
             <a href="/" className="text-sm font-medium text-gray-700 hover:text-amber-700 transition-colors">제품소개</a>
