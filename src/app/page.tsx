@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { fetchProducts, getImageUrl, formatPrice, Product } from '@/lib/supabase';
 
 const CATEGORY_ICONS: Record<string, string> = {
@@ -19,6 +19,36 @@ export default function HomePage() {
   const [showPrice, setShowPrice] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // 카테고리 바 드래그 스크롤
+  const catScrollRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
+  const dragStartX = useRef(0);
+  const scrollStartX = useRef(0);
+
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    const el = catScrollRef.current;
+    if (!el) return;
+    isDragging.current = true;
+    dragStartX.current = e.clientX;
+    scrollStartX.current = el.scrollLeft;
+    el.style.cursor = 'grabbing';
+    el.style.userSelect = 'none';
+  }, []);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!isDragging.current || !catScrollRef.current) return;
+    const dx = e.clientX - dragStartX.current;
+    catScrollRef.current.scrollLeft = scrollStartX.current - dx;
+  }, []);
+
+  const handleMouseUp = useCallback(() => {
+    isDragging.current = false;
+    if (catScrollRef.current) {
+      catScrollRef.current.style.cursor = 'grab';
+      catScrollRef.current.style.userSelect = '';
+    }
+  }, []);
 
   useEffect(() => {
     loadProducts();
@@ -128,7 +158,15 @@ export default function HomePage() {
       {/* ===== 카테고리 필터 바 (빙그레 스타일) ===== */}
       <div className="sticky top-16 z-40 bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide">
+          <div
+            ref={catScrollRef}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            className="flex items-center gap-1 overflow-x-auto scrollbar-hide"
+            style={{ cursor: 'grab' }}
+          >
             {/* 전체 메뉴 아이콘 */}
             <button
               onClick={() => handleCategoryChange('전체')}
