@@ -19,36 +19,36 @@ export default function HomePage() {
   const [showPrice, setShowPrice] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
 
-  // 카테고리 바 드래그 스크롤
   const catScrollRef = useRef<HTMLDivElement>(null);
-  const isDragging = useRef(false);
-  const dragStartX = useRef(0);
-  const scrollStartX = useRef(0);
 
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+  const updateScrollButtons = useCallback(() => {
     const el = catScrollRef.current;
     if (!el) return;
-    isDragging.current = true;
-    dragStartX.current = e.clientX;
-    scrollStartX.current = el.scrollLeft;
-    el.style.cursor = 'grabbing';
-    el.style.userSelect = 'none';
+    setCanScrollLeft(el.scrollLeft > 0);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 1);
   }, []);
 
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!isDragging.current || !catScrollRef.current) return;
-    const dx = e.clientX - dragStartX.current;
-    catScrollRef.current.scrollLeft = scrollStartX.current - dx;
-  }, []);
+  useEffect(() => {
+    const el = catScrollRef.current;
+    if (!el) return;
+    updateScrollButtons();
+    el.addEventListener('scroll', updateScrollButtons);
+    window.addEventListener('resize', updateScrollButtons);
+    return () => {
+      el.removeEventListener('scroll', updateScrollButtons);
+      window.removeEventListener('resize', updateScrollButtons);
+    };
+  }, [allMinorCategories, updateScrollButtons]);
 
-  const handleMouseUp = useCallback(() => {
-    isDragging.current = false;
-    if (catScrollRef.current) {
-      catScrollRef.current.style.cursor = 'grab';
-      catScrollRef.current.style.userSelect = '';
-    }
-  }, []);
+  function scrollCategories(direction: 'left' | 'right') {
+    const el = catScrollRef.current;
+    if (!el) return;
+    const amount = el.clientWidth * 0.6;
+    el.scrollBy({ left: direction === 'left' ? -amount : amount, behavior: 'smooth' });
+  }
 
   useEffect(() => {
     loadProducts();
@@ -104,10 +104,13 @@ export default function HomePage() {
     return () => observer.disconnect();
   }, [hasMore]);
 
-  function handleCategoryChange(cat: string) {
+  function handleCategoryChange(cat: string, e?: React.MouseEvent<HTMLButtonElement>) {
     setActiveCategory(cat);
     setVisibleCount(ITEMS_PER_PAGE);
     setMenuOpen(false);
+    if (e?.currentTarget) {
+      e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
   }
 
   function handleSearch(value: string) {
@@ -157,19 +160,23 @@ export default function HomePage() {
 
       {/* ===== 카테고리 필터 바 (빙그레 스타일) ===== */}
       <div className="sticky top-16 z-40 bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6 relative">
+          {/* 왼쪽 화살표 */}
+          {canScrollLeft && (
+            <button
+              onClick={() => scrollCategories('left')}
+              className="hidden md:flex absolute left-0 top-0 bottom-0 z-10 items-center justify-center w-10 bg-gradient-to-r from-white via-white to-transparent"
+            >
+              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7"/></svg>
+            </button>
+          )}
           <div
             ref={catScrollRef}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
             className="flex items-center gap-1 overflow-x-auto scrollbar-hide"
-            style={{ cursor: 'grab' }}
           >
             {/* 전체 메뉴 아이콘 */}
             <button
-              onClick={() => handleCategoryChange('전체')}
+              onClick={(e) => handleCategoryChange('전체', e)}
               className={`shrink-0 flex items-center justify-center w-10 h-10 rounded-full border-2 mr-2 transition-all ${activeCategory === '전체' ? 'border-amber-600 text-amber-700' : 'border-gray-300 text-gray-400 hover:border-gray-500'}`}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -177,13 +184,22 @@ export default function HomePage() {
             {allMinorCategories.map(cat => (
               <button
                 key={cat}
-                onClick={() => handleCategoryChange(cat)}
+                onClick={(e) => handleCategoryChange(cat, e)}
                 className={`shrink-0 px-5 py-3 text-sm whitespace-nowrap transition-all border-b-3 ${activeCategory === cat ? 'cat-tab-active' : 'text-gray-500 border-transparent hover:text-gray-900'}`}
               >
                 {cat}
               </button>
             ))}
           </div>
+          {/* 오른쪽 화살표 */}
+          {canScrollRight && (
+            <button
+              onClick={() => scrollCategories('right')}
+              className="hidden md:flex absolute right-0 top-0 bottom-0 z-10 items-center justify-center w-10 bg-gradient-to-l from-white via-white to-transparent"
+            >
+              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7"/></svg>
+            </button>
+          )}
         </div>
       </div>
 
