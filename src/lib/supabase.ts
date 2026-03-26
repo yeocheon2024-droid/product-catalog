@@ -27,7 +27,14 @@ export interface Product {
 }
 
 export function getImageUrl(product: Product): string | null {
-  if (product.image_url) return product.image_url;
+  if (product.image_url) {
+    // 외부 URL(네이버 등)은 핫링크 차단되므로 wsrv.nl 프록시로 표시
+    const url = product.image_url;
+    if (url.startsWith('http') && !url.includes('supabase')) {
+      return `https://wsrv.nl/?url=${encodeURIComponent(url)}&output=webp`;
+    }
+    return url;
+  }
   return `${STORAGE_URL}/${product.code}.png`;
 }
 
