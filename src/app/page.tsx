@@ -397,7 +397,6 @@ function ProductModal({ product, showPrice, onClose }: { product: Product; showP
               <table className="w-full text-sm">
                 <tbody>
                   <DetailRow label="단위" value={product.unit} />
-                  <DetailRow label="과세구분" value={product.tax} />
                 </tbody>
               </table>
             </div>
@@ -419,7 +418,7 @@ function ProductModal({ product, showPrice, onClose }: { product: Product; showP
             )}
 
             {/* 문의 버튼 */}
-            <a href="tel:1566-1521" className="mt-6 w-full flex items-center justify-center gap-2 bg-amber-700 text-white py-3.5 rounded-xl text-sm font-bold hover:bg-amber-800 transition-colors">
+            <a href="/contact" className="mt-6 w-full flex items-center justify-center gap-2 bg-amber-700 text-white py-3.5 rounded-xl text-sm font-bold hover:bg-amber-800 transition-colors">
               문의하기
             </a>
           </div>
