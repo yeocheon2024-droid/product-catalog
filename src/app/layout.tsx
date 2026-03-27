@@ -35,6 +35,7 @@ export default function RootLayout({
     <html lang="ko">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="naver-site-verification" content="360ad8c9acee4f2f93376655feb13f099f5fb59e" />
         <link rel="icon" href="/logo.png" />
       </head>
       <body className="bg-white text-gray-900 min-h-screen">
