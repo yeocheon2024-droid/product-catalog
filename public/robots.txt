@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://product-catalog-4qg.pages.dev/sitemap.xml
+Sitemap: https://jigufood.com/sitemap.xml

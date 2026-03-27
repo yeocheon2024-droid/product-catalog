@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: '인천 식자재 납품업체 | 지구농산',
     description: '인천·경기·서울 식자재 납품 전문. 쌀, 계란, 김치, 반찬, 식용유 도매. 새벽·당일배송.',
-    url: 'https://product-catalog-4qg.pages.dev',
+    url: 'https://jigufood.com',
     siteName: '지구농산',
     locale: 'ko_KR',
     type: 'website',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: 'https://product-catalog-4qg.pages.dev',
+    canonical: 'https://jigufood.com',
   },
 };
 

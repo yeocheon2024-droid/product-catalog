@@ -8,10 +8,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: '인천 식자재 납품 | 지구농산',
     description: '인천 전 지역 식자재 납품. 쌀, 계란, 김치, 반찬 도매. 새벽·당일배송.',
-    url: 'https://product-catalog-4qg.pages.dev/delivery/incheon',
+    url: 'https://jigufood.com/delivery/incheon',
   },
   alternates: {
-    canonical: 'https://product-catalog-4qg.pages.dev/delivery/incheon',
+    canonical: 'https://jigufood.com/delivery/incheon',
   },
 };
 

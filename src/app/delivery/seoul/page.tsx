@@ -8,10 +8,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: '서울 식자재 납품 | 지구농산',
     description: '서울 서남부 지역 식자재 납품. 쌀, 계란, 김치, 반찬 도매. 새벽·당일배송.',
-    url: 'https://product-catalog-4qg.pages.dev/delivery/seoul',
+    url: 'https://jigufood.com/delivery/seoul',
   },
   alternates: {
-    canonical: 'https://product-catalog-4qg.pages.dev/delivery/seoul',
+    canonical: 'https://jigufood.com/delivery/seoul',
   },
 };
 
