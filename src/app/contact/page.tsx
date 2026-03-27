@@ -269,77 +269,77 @@ export default function ContactPage() {
                 <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-sm text-red-700">{error}</div>
               )}
 
-              {/* 상호명 */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">상호명 <span className="text-red-500">*</span></label>
-                <input
-                  type="text"
-                  value={formData.company_name}
-                  onChange={e => setFormData(prev => ({ ...prev, company_name: e.target.value }))}
-                  placeholder="업체명을 입력해 주세요"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                />
-              </div>
-
-              {/* 사업자번호 */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">사업자번호</label>
-                <input
-                  type="text"
-                  value={formData.business_number}
-                  onChange={e => setFormData(prev => ({ ...prev, business_number: formatBizNumber(e.target.value) }))}
-                  placeholder="000-00-00000"
-                  maxLength={12}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                />
-              </div>
-
-              {/* 연락처 */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">연락처 <span className="text-red-500">*</span></label>
-                <input
-                  type="tel"
-                  value={formData.contact}
-                  onChange={e => setFormData(prev => ({ ...prev, contact: formatPhone(e.target.value) }))}
-                  placeholder="010-0000-0000"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                />
-              </div>
-
-              {/* 배송 지역 */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">배송 지역 <span className="text-red-500">*</span></label>
-                <select
-                  value={formData.delivery_area}
-                  onChange={e => setFormData(prev => ({ ...prev, delivery_area: e.target.value }))}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white"
-                >
-                  <option value="">지역을 선택해 주세요</option>
-                  {DELIVERY_REGIONS.map(r => (
-                    <option key={r.value} value={r.value}>{r.label}</option>
-                  ))}
-                </select>
-                {formData.delivery_area === '기타' && (
+              {/* 상호명 + 사업자번호 */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">상호명 <span className="text-red-500">*</span></label>
                   <input
                     type="text"
-                    value={formData.delivery_area_other}
-                    onChange={e => setFormData(prev => ({ ...prev, delivery_area_other: e.target.value }))}
-                    placeholder="배송 지역을 직접 입력해 주세요"
-                    className="mt-2 w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                    value={formData.company_name}
+                    onChange={e => setFormData(prev => ({ ...prev, company_name: e.target.value }))}
+                    placeholder="업체명"
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                   />
-                )}
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">사업자번호</label>
+                  <input
+                    type="text"
+                    value={formData.business_number}
+                    onChange={e => setFormData(prev => ({ ...prev, business_number: formatBizNumber(e.target.value) }))}
+                    placeholder="000-00-00000"
+                    maxLength={12}
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  />
+                </div>
               </div>
+
+              {/* 연락처 + 배송 지역 */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">연락처 <span className="text-red-500">*</span></label>
+                  <input
+                    type="tel"
+                    value={formData.contact}
+                    onChange={e => setFormData(prev => ({ ...prev, contact: formatPhone(e.target.value) }))}
+                    placeholder="010-0000-0000"
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">배송 지역 <span className="text-red-500">*</span></label>
+                  <select
+                    value={formData.delivery_area}
+                    onChange={e => setFormData(prev => ({ ...prev, delivery_area: e.target.value }))}
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white"
+                  >
+                    <option value="">지역 선택</option>
+                    {DELIVERY_REGIONS.map(r => (
+                      <option key={r.value} value={r.value}>{r.label}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              {formData.delivery_area === '기타' && (
+                <input
+                  type="text"
+                  value={formData.delivery_area_other}
+                  onChange={e => setFormData(prev => ({ ...prev, delivery_area_other: e.target.value }))}
+                  placeholder="배송 지역을 직접 입력해 주세요"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                />
+              )}
 
               {/* 관심 품목 */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2.5">관심 품목</label>
-                <div className="flex flex-wrap gap-2.5">
+                <label className="block text-sm font-medium text-gray-700 mb-2">관심 품목</label>
+                <div className="flex flex-wrap gap-2">
                   {PRODUCT_CATEGORIES.map(cat => (
                     <button
                       key={cat}
                       type="button"
                       onClick={() => handleProductToggle(cat)}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium border transition-colors ${
+                      className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
                         formData.products.includes(cat)
                           ? 'bg-amber-700 text-white border-amber-700'
                           : 'bg-white text-gray-700 border-gray-300 hover:border-amber-400'
@@ -351,28 +351,28 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* 주간 예상 수량 */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">주간 예상 수량</label>
-                <input
-                  type="text"
-                  value={formData.weekly_quantity}
-                  onChange={e => setFormData(prev => ({ ...prev, weekly_quantity: e.target.value }))}
-                  placeholder="예) 쌀 20kg 10포, 계란 30판 등"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                />
-              </div>
-
-              {/* 배송 희망 요일 */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">배송 희망 요일</label>
-                <input
-                  type="text"
-                  value={formData.preferred_days}
-                  onChange={e => setFormData(prev => ({ ...prev, preferred_days: e.target.value }))}
-                  placeholder="예) 월, 수, 금"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                />
+              {/* 주간 예상 수량 + 배송 희망 요일 */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">주간 예상 수량</label>
+                  <input
+                    type="text"
+                    value={formData.weekly_quantity}
+                    onChange={e => setFormData(prev => ({ ...prev, weekly_quantity: e.target.value }))}
+                    placeholder="예) 쌀 10포, 계란 30판"
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">배송 희망 요일</label>
+                  <input
+                    type="text"
+                    value={formData.preferred_days}
+                    onChange={e => setFormData(prev => ({ ...prev, preferred_days: e.target.value }))}
+                    placeholder="예) 월, 수, 금"
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  />
+                </div>
               </div>
 
               {/* 추가 요청사항 */}
@@ -382,7 +382,7 @@ export default function ContactPage() {
                   value={formData.memo}
                   onChange={e => setFormData(prev => ({ ...prev, memo: e.target.value }))}
                   placeholder="기타 요청사항을 입력해 주세요"
-                  rows={3}
+                  rows={2}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none"
                 />
               </div>
