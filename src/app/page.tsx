@@ -83,7 +83,12 @@ export default function HomePage() {
     const matchSearch = !search || p.name.toLowerCase().includes(search.toLowerCase()) || p.code.toLowerCase().includes(search.toLowerCase());
     return matchCategory && matchSearch;
   }).sort((a, b) => {
-    if (activeCategory !== '전체') return 0;
+    if (activeCategory !== '전체') {
+      // 카테고리 선택 시 가격 오름차순 (싼 것부터)
+      const aPrice = a.sell || Number.MAX_SAFE_INTEGER;
+      const bPrice = b.sell || Number.MAX_SAFE_INTEGER;
+      return aPrice - bPrice;
+    }
     const PRIORITY_ORDER = ['쌀', '김치/반찬', '계란', '기름/분말'];
     const aIdx = PRIORITY_ORDER.indexOf(a.minor_name);
     const bIdx = PRIORITY_ORDER.indexOf(b.minor_name);
