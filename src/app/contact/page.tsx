@@ -62,6 +62,7 @@ export default function ContactPage() {
     preferred_days: '',
     memo: '',
   });
+  const [privacyAgreed, setPrivacyAgreed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
@@ -107,6 +108,10 @@ export default function ContactPage() {
 
     if (!formData.company_name || !formData.contact || !formData.delivery_area) {
       setError('상호명, 연락처, 배송 지역은 필수 입력입니다.');
+      return;
+    }
+    if (!privacyAgreed) {
+      setError('개인정보 수집·이용에 동의해 주세요.');
       return;
     }
 
@@ -365,9 +370,33 @@ export default function ContactPage() {
                 />
               </div>
 
+              {/* 개인정보 수집·이용 동의 */}
+              <div className="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                <div className="text-xs text-gray-500 mb-3 leading-relaxed">
+                  <p className="font-medium text-gray-700 mb-1">[개인정보 수집·이용 동의]</p>
+                  <p>· 수집 항목: 상호명, 사업자번호, 연락처</p>
+                  <p>· 수집 목적: 견적 요청 접수 및 상담 연락</p>
+                  <p>· 보관 기간: 수집일로부터 1년 (이후 파기)</p>
+                  <p className="mt-1">
+                    자세한 내용은{' '}
+                    <a href="/privacy" className="text-amber-700 underline hover:text-amber-800" target="_blank">개인정보처리방침</a>
+                    을 확인해 주세요.
+                  </p>
+                </div>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={privacyAgreed}
+                    onChange={e => setPrivacyAgreed(e.target.checked)}
+                    className="w-4 h-4 accent-amber-700"
+                  />
+                  <span className="text-sm font-medium text-gray-700">개인정보 수집·이용에 동의합니다 <span className="text-red-500">*</span></span>
+                </label>
+              </div>
+
               <button
                 type="submit"
-                disabled={submitting}
+                disabled={submitting || !privacyAgreed}
                 className="w-full bg-amber-700 text-white py-3 rounded-xl text-sm font-bold hover:bg-amber-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {submitting ? '전송 중...' : '견적 요청하기'}
