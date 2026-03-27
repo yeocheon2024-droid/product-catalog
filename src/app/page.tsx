@@ -286,8 +286,9 @@ export default function HomePage() {
               <p className="text-xs text-gray-500">인천광역시 부평구 일신동 79-25</p>
             </div>
           </div>
-          <div className="mt-6 pt-4 border-t border-gray-800 text-xs text-gray-500">
-            &copy; 2026 지구농산 (주). All rights reserved.
+          <div className="mt-6 pt-4 border-t border-gray-800 text-xs text-gray-500 flex flex-col sm:flex-row sm:justify-between gap-2">
+            <span>&copy; 2026 지구농산 (주). All rights reserved.</span>
+            <a href="/privacy" className="hover:text-gray-300 transition-colors">개인정보처리방침</a>
           </div>
         </div>
       </footer>
