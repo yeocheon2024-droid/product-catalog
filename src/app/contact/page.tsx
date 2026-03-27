@@ -2,8 +2,12 @@
 
 import { useState } from 'react';
 import { supabase } from '../../lib/supabase';
+import emailjs from '@emailjs/browser';
 
 const KAKAO_CHANNEL_ID = '_xnQgVX';
+const EMAILJS_SERVICE_ID = 'service_54hjm88';
+const EMAILJS_TEMPLATE_ID = 'template_k6ss4l8';
+const EMAILJS_PUBLIC_KEY = 'Kpl0HIYsFdyHN_kLx';
 
 const PRODUCT_CATEGORIES = ['쌀/잡곡', '계란', '김치/반찬', '식용유', '기타'];
 
@@ -149,27 +153,19 @@ export default function ContactPage() {
         if (dbError) throw dbError;
       }
 
-      // 카카오 채널 채팅으로 알림 전달 (사업자 검증 결과 포함)
-      const bizLine = bizStatus
-        ? `사업자: ${formData.business_number} (${bizStatus})`
-        : '';
-      const message = [
-        `[새 견적 요청]`,
-        `상호: ${inquiry.company_name}`,
-        bizLine,
-        `연락처: ${inquiry.contact}`,
-        `지역: ${inquiry.delivery_area}`,
-        formData.products.length > 0 ? `관심품목: ${formData.products.join(', ')}` : '',
-        inquiry.weekly_quantity ? `주간수량: ${inquiry.weekly_quantity}` : '',
-        inquiry.preferred_days ? `배송요일: ${inquiry.preferred_days}` : '',
-        inquiry.memo ? `요청사항: ${inquiry.memo}` : '',
-      ].filter(Boolean).join('\n');
-
-      window.open(
-        `https://pf.kakao.com/${KAKAO_CHANNEL_ID}/chat?msg=${encodeURIComponent(message)}`,
-        '_blank',
-        'noopener,noreferrer'
-      );
+      // 이메일 알림 발송
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        company_name: inquiry.company_name,
+        business_number: cleanedBizNo || '-',
+        business_status: bizStatus || '-',
+        contact: inquiry.contact,
+        delivery_area: inquiry.delivery_area,
+        products: formData.products.length > 0 ? formData.products.join(', ') : '-',
+        weekly_quantity: inquiry.weekly_quantity || '-',
+        preferred_days: inquiry.preferred_days || '-',
+        memo: inquiry.memo || '-',
+        created_at: new Date().toLocaleString('ko-KR'),
+      }, EMAILJS_PUBLIC_KEY).catch(() => {});
 
       setSubmitted(true);
     } catch (err: any) {
