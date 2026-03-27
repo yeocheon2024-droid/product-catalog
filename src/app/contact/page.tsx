@@ -1,6 +1,31 @@
 'use client';
 
 import { useState } from 'react';
+import { supabase } from '../../lib/supabase';
+
+const KAKAO_CHANNEL_ID = '_xnQgVX';
+
+const PRODUCT_CATEGORIES = ['쌀/잡곡', '계란', '김치/반찬', '식용유', '기타'];
+
+const DELIVERY_REGIONS = [
+  { label: '인천 부평구', value: '인천 부평구' },
+  { label: '인천 계양구', value: '인천 계양구' },
+  { label: '인천 서구', value: '인천 서구' },
+  { label: '인천 남동구', value: '인천 남동구' },
+  { label: '인천 미추홀구', value: '인천 미추홀구' },
+  { label: '인천 연수구', value: '인천 연수구' },
+  { label: '인천 중구', value: '인천 중구' },
+  { label: '인천 동구', value: '인천 동구' },
+  { label: '경기 부천시', value: '경기 부천시' },
+  { label: '경기 시흥시', value: '경기 시흥시' },
+  { label: '경기 안산시', value: '경기 안산시' },
+  { label: '경기 광명시', value: '경기 광명시' },
+  { label: '경기 안양시', value: '경기 안양시' },
+  { label: '서울 강서구', value: '서울 강서구' },
+  { label: '서울 금천구', value: '서울 금천구' },
+  { label: '서울 영등포구', value: '서울 영등포구' },
+  { label: '기타 (직접 입력)', value: '기타' },
+];
 
 const DELIVERY_AREAS = [
   {
@@ -26,6 +51,129 @@ const STRENGTHS = [
 
 export default function ContactPage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    company_name: '',
+    business_number: '',
+    contact: '',
+    delivery_area: '',
+    delivery_area_other: '',
+    products: [] as string[],
+    weekly_quantity: '',
+    preferred_days: '',
+    memo: '',
+  });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleProductToggle = (product: string) => {
+    setFormData(prev => ({
+      ...prev,
+      products: prev.products.includes(product)
+        ? prev.products.filter(p => p !== product)
+        : [...prev.products, product],
+    }));
+  };
+
+  // 사업자번호 검증 (국세청 API) — 방문자에게는 결과 미노출
+  const verifyBusinessNumber = async (bizNo: string): Promise<string> => {
+    const cleaned = bizNo.replace(/[^0-9]/g, '');
+    if (cleaned.length !== 10) return '조회불가(형식오류)';
+
+    try {
+      const res = await fetch(
+        'https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=' +
+          encodeURIComponent(process.env.NEXT_PUBLIC_NTS_API_KEY || ''),
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ b_no: [cleaned] }),
+        }
+      );
+      const json = await res.json();
+      const status = json?.data?.[0]?.b_stt_cd;
+      if (status === '01') return '사업자 정상';
+      if (status === '02') return '사업자 휴업';
+      if (status === '03') return '사업자 폐업';
+      return '조회불가';
+    } catch {
+      return '조회실패';
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    if (!formData.company_name || !formData.contact || !formData.delivery_area) {
+      setError('상호명, 연락처, 배송 지역은 필수 입력입니다.');
+      return;
+    }
+
+    setSubmitting(true);
+
+    const area = formData.delivery_area === '기타'
+      ? formData.delivery_area_other || '기타'
+      : formData.delivery_area;
+
+    // 사업자번호 검증 (입력된 경우만)
+    let bizStatus = '';
+    const cleanedBizNo = formData.business_number.replace(/[^0-9]/g, '');
+    if (cleanedBizNo.length > 0) {
+      bizStatus = await verifyBusinessNumber(formData.business_number);
+    }
+
+    const inquiry = {
+      company_name: formData.company_name,
+      business_number: cleanedBizNo || null,
+      business_status: bizStatus || null,
+      contact: formData.contact,
+      delivery_area: area,
+      products: formData.products,
+      weekly_quantity: formData.weekly_quantity,
+      preferred_days: formData.preferred_days,
+      memo: formData.memo,
+      created_at: new Date().toISOString(),
+    };
+
+    try {
+      if (supabase) {
+        const { error: dbError } = await supabase
+          .from('inquiries')
+          .insert([inquiry]);
+        if (dbError) throw dbError;
+      }
+
+      // 카카오 채널 채팅으로 알림 전달 (사업자 검증 결과 포함)
+      const bizLine = bizStatus
+        ? `사업자: ${formData.business_number} (${bizStatus})`
+        : '';
+      const message = [
+        `[새 견적 요청]`,
+        `상호: ${inquiry.company_name}`,
+        bizLine,
+        `연락처: ${inquiry.contact}`,
+        `지역: ${inquiry.delivery_area}`,
+        formData.products.length > 0 ? `관심품목: ${formData.products.join(', ')}` : '',
+        inquiry.weekly_quantity ? `주간수량: ${inquiry.weekly_quantity}` : '',
+        inquiry.preferred_days ? `배송요일: ${inquiry.preferred_days}` : '',
+        inquiry.memo ? `요청사항: ${inquiry.memo}` : '',
+      ].filter(Boolean).join('\n');
+
+      window.open(
+        `https://pf.kakao.com/${KAKAO_CHANNEL_ID}/chat?msg=${encodeURIComponent(message)}`,
+        '_blank',
+        'noopener,noreferrer'
+      );
+
+      setSubmitted(true);
+    } catch (err: any) {
+      setError('전송에 실패했습니다. 대표번호로 문의해 주세요.');
+      console.error(err);
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -72,6 +220,163 @@ export default function ContactPage() {
           </a>
         </div>
       </div>
+
+      {/* ===== 견적 요청 폼 ===== */}
+      <section className="border-t border-gray-100 bg-amber-50/40">
+        <div className="max-w-3xl mx-auto px-6 py-12 md:py-16">
+          <h2 className="text-xl font-bold text-gray-900 mb-1">견적 요청</h2>
+          <p className="text-sm text-gray-500 mb-8">아래 정보를 입력해 주시면 빠르게 견적을 안내드리겠습니다.</p>
+
+          {submitted ? (
+            <div className="border border-green-200 bg-green-50 rounded-xl p-8 text-center">
+              <svg className="w-12 h-12 text-green-500 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              <p className="text-lg font-bold text-gray-900">견적 요청이 접수되었습니다</p>
+              <p className="mt-2 text-sm text-gray-500">담당자가 확인 후 빠르게 연락드리겠습니다.</p>
+              <button
+                onClick={() => { setSubmitted(false); setFormData({ company_name: '', business_number: '', contact: '', delivery_area: '', delivery_area_other: '', products: [], weekly_quantity: '', preferred_days: '', memo: '' }); }}
+                className="mt-6 text-sm text-amber-700 font-medium hover:underline"
+              >
+                새 견적 요청하기
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-5">
+              {error && (
+                <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-sm text-red-700">{error}</div>
+              )}
+
+              {/* 상호명 */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">상호명 <span className="text-red-500">*</span></label>
+                <input
+                  type="text"
+                  value={formData.company_name}
+                  onChange={e => setFormData(prev => ({ ...prev, company_name: e.target.value }))}
+                  placeholder="업체명을 입력해 주세요"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                />
+              </div>
+
+              {/* 사업자번호 */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">사업자번호</label>
+                <input
+                  type="text"
+                  value={formData.business_number}
+                  onChange={e => setFormData(prev => ({ ...prev, business_number: e.target.value }))}
+                  placeholder="000-00-00000"
+                  maxLength={12}
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                />
+              </div>
+
+              {/* 연락처 */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">연락처 <span className="text-red-500">*</span></label>
+                <input
+                  type="tel"
+                  value={formData.contact}
+                  onChange={e => setFormData(prev => ({ ...prev, contact: e.target.value }))}
+                  placeholder="010-0000-0000"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                />
+              </div>
+
+              {/* 배송 지역 */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">배송 지역 <span className="text-red-500">*</span></label>
+                <select
+                  value={formData.delivery_area}
+                  onChange={e => setFormData(prev => ({ ...prev, delivery_area: e.target.value }))}
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white"
+                >
+                  <option value="">지역을 선택해 주세요</option>
+                  {DELIVERY_REGIONS.map(r => (
+                    <option key={r.value} value={r.value}>{r.label}</option>
+                  ))}
+                </select>
+                {formData.delivery_area === '기타' && (
+                  <input
+                    type="text"
+                    value={formData.delivery_area_other}
+                    onChange={e => setFormData(prev => ({ ...prev, delivery_area_other: e.target.value }))}
+                    placeholder="배송 지역을 직접 입력해 주세요"
+                    className="mt-2 w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  />
+                )}
+              </div>
+
+              {/* 관심 품목 */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2.5">관심 품목</label>
+                <div className="flex flex-wrap gap-2.5">
+                  {PRODUCT_CATEGORIES.map(cat => (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => handleProductToggle(cat)}
+                      className={`px-4 py-2 rounded-lg text-sm font-medium border transition-colors ${
+                        formData.products.includes(cat)
+                          ? 'bg-amber-700 text-white border-amber-700'
+                          : 'bg-white text-gray-700 border-gray-300 hover:border-amber-400'
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 주간 예상 수량 */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">주간 예상 수량</label>
+                <input
+                  type="text"
+                  value={formData.weekly_quantity}
+                  onChange={e => setFormData(prev => ({ ...prev, weekly_quantity: e.target.value }))}
+                  placeholder="예) 쌀 20kg 10포, 계란 30판 등"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                />
+              </div>
+
+              {/* 배송 희망 요일 */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">배송 희망 요일</label>
+                <input
+                  type="text"
+                  value={formData.preferred_days}
+                  onChange={e => setFormData(prev => ({ ...prev, preferred_days: e.target.value }))}
+                  placeholder="예) 월, 수, 금"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                />
+              </div>
+
+              {/* 추가 요청사항 */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">추가 요청사항 <span className="text-gray-400 font-normal">(선택)</span></label>
+                <textarea
+                  value={formData.memo}
+                  onChange={e => setFormData(prev => ({ ...prev, memo: e.target.value }))}
+                  placeholder="기타 요청사항을 입력해 주세요"
+                  rows={3}
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={submitting}
+                className="w-full bg-amber-700 text-white py-3 rounded-xl text-sm font-bold hover:bg-amber-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {submitting ? '전송 중...' : '견적 요청하기'}
+              </button>
+              <p className="text-xs text-gray-400 text-center">접수 후 영업일 기준 1일 이내 담당자가 연락드립니다.</p>
+            </form>
+          )}
+        </div>
+      </section>
 
       {/* ===== 소개 ===== */}
       <section className="border-t border-gray-100">
