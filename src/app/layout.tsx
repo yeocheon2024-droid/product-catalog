@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import KakaoChannelButton from '../components/KakaoChannelButton';
 
 export const metadata: Metadata = {
   title: '지구농산 (주) | 품목 안내',
@@ -19,6 +20,7 @@ export default function RootLayout({
       </head>
       <body className="bg-white text-gray-900 min-h-screen">
         {children}
+        <KakaoChannelButton />
       </body>
     </html>
   );
