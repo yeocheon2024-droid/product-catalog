@@ -160,74 +160,12 @@ export default function HomePage() {
         )}
       </header>
 
-      {/* ===== 히어로 영역 ===== */}
-      <section className="bg-amber-50 border-b border-amber-100">
-        <div className="max-w-3xl mx-auto px-6 py-10 md:py-16 text-center">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 leading-tight">
-            전날 오후 4시 주문,<br />다음날 새벽 도착
-          </h1>
-          <p className="mt-3 text-sm sm:text-base text-gray-600">
-            쌀·잡곡·계란·김치·반찬·기름 식당 식자재 한 번에 해결
-          </p>
-
-          {/* 지역 뱃지 */}
-          <div className="mt-6 flex gap-2 overflow-x-auto scrollbar-hide justify-center pb-1">
-            {[
-              { name: '인천', href: '/delivery/incheon' },
-              { name: '부천', href: '#' },
-              { name: '시흥', href: '#' },
-              { name: '안산', href: '#' },
-              { name: '광명', href: '#' },
-              { name: '강서구', href: '/delivery/seoul' },
-              { name: '영등포', href: '/delivery/seoul' },
-              { name: '여의도', href: '/delivery/seoul' },
-            ].map(area => (
-              <a
-                key={area.name}
-                href={area.href}
-                className="shrink-0 px-4 py-1.5 bg-white border border-amber-200 rounded-full text-sm font-medium text-amber-800 hover:bg-amber-100 transition-colors"
-              >
-                {area.name}
-              </a>
-            ))}
-          </div>
-
-          {/* CTA 버튼 */}
-          <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-            <a
-              href="https://pf.kakao.com/_xnQgVX/chat"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-[#FEE500] text-[#3C1E1E] px-6 py-3 rounded-xl text-sm font-bold hover:bg-[#F5DC00] transition-colors"
-            >
-              <svg className="w-5 h-5" viewBox="0 0 256 256" fill="none"><path d="M128 36C70.562 36 24 72.713 24 118.244C24 147.628 43.389 173.574 72.629 188.476L63.106 222.863C62.537 224.89 64.886 226.527 66.659 225.35L107.324 199.009C114.054 199.851 120.959 200.288 128 200.288C185.438 200.288 232 163.775 232 118.244C232 72.713 185.438 36 128 36Z" fill="#3C1E1E"/></svg>
-              카카오톡 문의하기
-            </a>
-            <a
-              href="/contact"
-              className="inline-flex items-center justify-center gap-2 border-2 border-amber-700 text-amber-700 px-6 py-3 rounded-xl text-sm font-bold hover:bg-amber-700 hover:text-white transition-colors"
-            >
-              견적 바로 요청하기
-            </a>
-          </div>
-
-          {/* 신뢰 수치 */}
-          <div className="mt-8 flex justify-center gap-6 text-xs sm:text-sm text-gray-500">
-            <span className="flex items-center gap-1"><span className="font-bold text-gray-700">거래처 300+</span></span>
-            <span className="text-gray-300">|</span>
-            <span className="flex items-center gap-1"><span className="font-bold text-gray-700">새벽배송 전문</span></span>
-            <span className="text-gray-300">|</span>
-            <span className="flex items-center gap-1"><span className="font-bold text-gray-700">당일 주문 가능</span></span>
-          </div>
-        </div>
-      </section>
-
       {/* ===== 브레드크럼 + 타이틀 ===== */}
       <div className="max-w-7xl mx-auto px-6 pt-8 pb-4">
         <div className="text-xs text-gray-400 mb-4">
           <span>홈</span> &gt; <span>제품소개</span>
         </div>
-        <h2 className="text-3xl md:text-4xl font-black text-gray-900">제품소개</h2>
+        <h1 className="text-3xl md:text-4xl font-black text-gray-900">제품소개</h1>
       </div>
 
       {/* ===== 카테고리 필터 바 (빙그레 스타일) ===== */}
