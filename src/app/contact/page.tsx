@@ -483,7 +483,7 @@ export default function ContactPage() {
           <div className="grid sm:grid-cols-2 gap-y-3 gap-x-8 text-sm">
             <div>
               <p className="text-gray-400">주소</p>
-              <p className="text-gray-700 mt-0.5">인천광역시 부평구 일신동 79-25</p>
+              <p className="text-gray-700 mt-0.5">인천광역시 부평구 항동로139번길 39, 1층 물류창고</p>
             </div>
             <div>
               <p className="text-gray-400">대표전화</p>
@@ -508,7 +508,7 @@ export default function ContactPage() {
             <div>
               <div className="flex items-center gap-2.5">
                 <img src="/logo.png" alt="지구농산" className="h-8 w-8 brightness-0 invert opacity-80" />
-                <h3 className="text-white text-lg tracking-wide" style={{ fontFamily: "'EBSHunminjeongeum', 'Jua', sans-serif" }}>지구농산 농업회사법인</h3>
+                <h3 className="text-white text-lg tracking-wide" style={{ fontFamily: "'EBSHunminjeongeum', 'Jua', sans-serif" }}>지구농산 주식회사</h3>
               </div>
               <p className="text-sm mt-1 text-gray-500">쌀 · 김치 · 계란 · 종합유통</p>
             </div>
@@ -516,7 +516,7 @@ export default function ContactPage() {
               <p>대표전화: 1566-1521</p>
               <p>팩스: 032-330-4428</p>
               <p>이메일: ljsgn5958@gmail.com</p>
-              <p className="text-xs text-gray-500">인천광역시 부평구 일신동 79-25</p>
+              <p className="text-xs text-gray-500">인천광역시 부평구 항동로139번길 39, 1층 물류창고</p>
             </div>
           </div>
           <div className="mt-6 pt-4 border-t border-gray-800 text-xs text-gray-500 flex flex-col sm:flex-row sm:justify-between gap-2">

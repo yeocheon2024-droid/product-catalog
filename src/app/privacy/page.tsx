@@ -43,7 +43,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-base font-bold text-gray-900 mb-2">1. 개인정보의 수집 및 이용 목적</h2>
-            <p>지구농산 농업회사법인(이하 &quot;회사&quot;)은 다음 목적을 위해 개인정보를 수집·이용합니다.</p>
+            <p>지구농산 주식회사(이하 &quot;회사&quot;)은 다음 목적을 위해 개인정보를 수집·이용합니다.</p>
             <ul className="mt-2 space-y-1 ml-4 list-disc text-gray-600">
               <li>견적 요청 접수 및 상담 연락</li>
               <li>거래처 사업자 등록 상태 확인</li>
@@ -137,7 +137,7 @@ export default function PrivacyPage() {
             <div>
               <div className="flex items-center gap-2.5">
                 <img src="/logo.png" alt="지구농산" className="h-8 w-8 brightness-0 invert opacity-80" />
-                <h3 className="text-white text-lg tracking-wide" style={{ fontFamily: "'EBSHunminjeongeum', 'Jua', sans-serif" }}>지구농산 농업회사법인</h3>
+                <h3 className="text-white text-lg tracking-wide" style={{ fontFamily: "'EBSHunminjeongeum', 'Jua', sans-serif" }}>지구농산 주식회사</h3>
               </div>
               <p className="text-sm mt-1 text-gray-500">쌀 · 김치 · 계란 · 종합유통</p>
             </div>
@@ -145,7 +145,7 @@ export default function PrivacyPage() {
               <p>대표전화: 1566-1521</p>
               <p>팩스: 032-330-4428</p>
               <p>이메일: ljsgn5958@gmail.com</p>
-              <p className="text-xs text-gray-500">인천광역시 부평구 일신동 79-25</p>
+              <p className="text-xs text-gray-500">인천광역시 부평구 항동로139번길 39, 1층 물류창고</p>
             </div>
           </div>
           <div className="mt-6 pt-4 border-t border-gray-800 text-xs text-gray-500 flex flex-col sm:flex-row sm:justify-between gap-2">
