@@ -84,7 +84,6 @@ export default function HomePage() {
     return matchCategory && matchSearch;
   }).sort((a, b) => {
     if (activeCategory === '쌀') {
-      // 쌀 카테고리만 가격 오름차순 (싼 것부터)
       const aPrice = a.sell || Number.MAX_SAFE_INTEGER;
       const bPrice = b.sell || Number.MAX_SAFE_INTEGER;
       return aPrice - bPrice;
@@ -95,7 +94,12 @@ export default function HomePage() {
     const bIdx = PRIORITY_ORDER.indexOf(b.minor_name);
     const aOrder = aIdx !== -1 ? aIdx : 100 - products.filter(p => p.minor_name === a.minor_name).length;
     const bOrder = bIdx !== -1 ? bIdx : 100 - products.filter(p => p.minor_name === b.minor_name).length;
-    return aOrder - bOrder;
+    if (aOrder !== bOrder) return aOrder - bOrder;
+    // 전체 목록에서 쌀끼리는 가격 오름차순
+    if (a.minor_name === '쌀' && b.minor_name === '쌀') {
+      return (a.sell || Number.MAX_SAFE_INTEGER) - (b.sell || Number.MAX_SAFE_INTEGER);
+    }
+    return 0;
   });
 
   const visible = filtered.slice(0, visibleCount);
