@@ -71,6 +71,20 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
 
+  const formatBizNumber = (value: string) => {
+    const nums = value.replace(/[^0-9]/g, '').slice(0, 10);
+    if (nums.length <= 3) return nums;
+    if (nums.length <= 5) return `${nums.slice(0, 3)}-${nums.slice(3)}`;
+    return `${nums.slice(0, 3)}-${nums.slice(3, 5)}-${nums.slice(5)}`;
+  };
+
+  const formatPhone = (value: string) => {
+    const nums = value.replace(/[^0-9]/g, '').slice(0, 11);
+    if (nums.length <= 3) return nums;
+    if (nums.length <= 7) return `${nums.slice(0, 3)}-${nums.slice(3)}`;
+    return `${nums.slice(0, 3)}-${nums.slice(3, 7)}-${nums.slice(7)}`;
+  };
+
   const handleProductToggle = (product: string) => {
     setFormData(prev => ({
       ...prev,
@@ -273,7 +287,7 @@ export default function ContactPage() {
                 <input
                   type="text"
                   value={formData.business_number}
-                  onChange={e => setFormData(prev => ({ ...prev, business_number: e.target.value }))}
+                  onChange={e => setFormData(prev => ({ ...prev, business_number: formatBizNumber(e.target.value) }))}
                   placeholder="000-00-00000"
                   maxLength={12}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
@@ -286,7 +300,7 @@ export default function ContactPage() {
                 <input
                   type="tel"
                   value={formData.contact}
-                  onChange={e => setFormData(prev => ({ ...prev, contact: e.target.value }))}
+                  onChange={e => setFormData(prev => ({ ...prev, contact: formatPhone(e.target.value) }))}
                   placeholder="010-0000-0000"
                   className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 />
