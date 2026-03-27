@@ -219,10 +219,17 @@ export default function ContactPage() {
             1566-1521
           </a>
           <p className="mt-2 text-xs text-gray-400">평일 운영 (토·일·공휴일 휴무)</p>
-          <a href="tel:1566-1521" className="mt-4 inline-flex items-center gap-2 bg-amber-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-amber-800 transition-colors">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-            전화하기
-          </a>
+          <p className="mt-1 text-xs text-gray-400">통화 가능 시간: 09:00 ~ 17:00 (점심시간 12:00 ~ 13:00)</p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <a href="tel:1566-1521" className="inline-flex items-center gap-2 bg-amber-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-amber-800 transition-colors">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+              전화하기
+            </a>
+            <a href={`https://pf.kakao.com/${KAKAO_CHANNEL_ID}/chat`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#FEE500] text-[#3C1E1E] px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-[#F5DC00] transition-colors">
+              <svg className="w-4 h-4" viewBox="0 0 256 256" fill="none"><path d="M128 36C70.562 36 24 72.713 24 118.244C24 147.628 43.389 173.574 72.629 188.476L63.106 222.863C62.537 224.89 64.886 226.527 66.659 225.35L107.324 199.009C114.054 199.851 120.959 200.288 128 200.288C185.438 200.288 232 163.775 232 118.244C232 72.713 185.438 36 128 36Z" fill="#3C1E1E"/></svg>
+              카카오톡 상담
+            </a>
+          </div>
         </div>
       </div>
 
