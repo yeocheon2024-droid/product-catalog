@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { fetchProducts, getImageUrl, formatPrice, Product } from '@/lib/supabase';
+import { fetchProducts, getImageUrl, formatPrice, getDisplayName, Product } from '@/lib/supabase';
 
 const CATEGORY_ICONS: Record<string, string> = {
   '농산품': '', '수산품': '', '축산품': '', '공산품': '',
@@ -80,7 +80,7 @@ export default function HomePage() {
 
   const filtered = products.filter(p => {
     const matchCategory = activeCategory === '전체' || p.minor_name === activeCategory;
-    const matchSearch = !search || p.name.toLowerCase().includes(search.toLowerCase()) || p.code.toLowerCase().includes(search.toLowerCase());
+    const matchSearch = !search || p.name.toLowerCase().includes(search.toLowerCase()) || (p.display_name || '').toLowerCase().includes(search.toLowerCase()) || p.code.toLowerCase().includes(search.toLowerCase());
     return matchCategory && matchSearch;
   }).sort((a, b) => {
     if (activeCategory === '쌀') {
@@ -329,7 +329,7 @@ function ProductCard({ product, showPrice, onClick }: { product: Product; showPr
       </div>
       {/* 품목명 (빙그레 스타일: 이미지 아래 중앙 정렬) */}
       <div className="mt-3 text-center px-1">
-        <h3 className="text-sm font-medium text-gray-900 line-clamp-2 leading-snug">{product.name}</h3>
+        <h3 className="text-sm font-medium text-gray-900 line-clamp-2 leading-snug">{getDisplayName(product)}</h3>
         {product.spec && (
           <p className="text-xs text-gray-400 mt-0.5 truncate">{product.spec}</p>
         )}
@@ -382,7 +382,7 @@ function ProductModal({ product, showPrice, onClose }: { product: Product; showP
               {product.minor_name && <span className="text-xs px-2 py-0.5 rounded bg-gray-100 text-gray-500">{product.minor_name}</span>}
             </div>
 
-            <h2 className="text-2xl font-black text-gray-900">{product.name}</h2>
+            <h2 className="text-2xl font-black text-gray-900">{getDisplayName(product)}</h2>
 
             {/* 규격 태그 (빙그레 용량 스타일) */}
             {product.spec && (

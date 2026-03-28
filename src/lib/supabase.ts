@@ -24,6 +24,7 @@ export interface Product {
   sell: number;
   registered_at: string;
   image_url?: string;
+  display_name?: string;
 }
 
 export function getImageUrl(product: Product): string | null {
@@ -68,6 +69,10 @@ export async function fetchProductByCode(code: string): Promise<Product | null> 
 export function getMajorCategories(products: Product[]): string[] {
   const categories = new Set(products.map(p => p.major_name).filter(Boolean));
   return Array.from(categories).sort();
+}
+
+export function getDisplayName(product: Product): string {
+  return product.display_name || product.name;
 }
 
 export function formatPrice(price: number): string {
