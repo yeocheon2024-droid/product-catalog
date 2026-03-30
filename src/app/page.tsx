@@ -88,6 +88,12 @@ export default function HomePage() {
       const bPrice = b.sell || Number.MAX_SAFE_INTEGER;
       return aPrice - bPrice;
     }
+    // 김치/반찬 카테고리: 김치류 먼저, 반찬류 나중에
+    if (activeCategory === '김치/반찬') {
+      const aIsKimchi = a.name.includes('김치') ? 0 : 1;
+      const bIsKimchi = b.name.includes('김치') ? 0 : 1;
+      return aIsKimchi - bIsKimchi;
+    }
     if (activeCategory !== '전체') return 0;
     const PRIORITY_ORDER = ['쌀', '김치/반찬', '계란', '기름/분말'];
     const aIdx = PRIORITY_ORDER.indexOf(a.minor_name);
@@ -98,6 +104,12 @@ export default function HomePage() {
     // 전체 목록에서 쌀끼리는 가격 오름차순
     if (a.minor_name === '쌀' && b.minor_name === '쌀') {
       return (a.sell || Number.MAX_SAFE_INTEGER) - (b.sell || Number.MAX_SAFE_INTEGER);
+    }
+    // 전체 목록에서 김치/반찬끼리는 김치 먼저
+    if (a.minor_name === '김치/반찬' && b.minor_name === '김치/반찬') {
+      const aIsKimchi = a.name.includes('김치') ? 0 : 1;
+      const bIsKimchi = b.name.includes('김치') ? 0 : 1;
+      return aIsKimchi - bIsKimchi;
     }
     return 0;
   });
