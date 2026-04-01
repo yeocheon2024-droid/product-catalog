@@ -338,6 +338,12 @@ function ProductCard({ product, showPrice, onClick }: { product: Product; showPr
         ) : (
           <img src="/logo.png" alt="" className="w-16 h-16 opacity-20" />
         )}
+        {/* 품절 오버레이 */}
+        {product.sold_out && (
+          <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded-2xl z-10">
+            <span className="bg-red-600 text-white text-sm font-black px-4 py-1.5 rounded-full tracking-wider">품절</span>
+          </div>
+        )}
       </div>
       {/* 품목명 (빙그레 스타일: 이미지 아래 중앙 정렬) */}
       <div className="mt-3 text-center px-1">
@@ -346,7 +352,7 @@ function ProductCard({ product, showPrice, onClick }: { product: Product; showPr
           <p className="text-xs text-gray-400 mt-0.5 truncate">{product.spec}</p>
         )}
         {showPrice && product.sell > 0 && (
-          <p className="text-sm font-bold text-amber-700 mt-1">{formatPrice(product.sell)}</p>
+          <p className={`text-sm font-bold mt-1 ${product.sold_out ? 'text-gray-400 line-through' : 'text-amber-700'}`}>{formatPrice(product.sell)}</p>
         )}
       </div>
     </div>
@@ -379,11 +385,16 @@ function ProductModal({ product, showPrice, onClose }: { product: Product; showP
 
         <div className="md:flex">
           {/* 좌: 이미지 (빙그레 스타일) */}
-          <div className="md:w-1/2 bg-gray-50 flex items-center justify-center p-8 aspect-square md:aspect-auto">
+          <div className="md:w-1/2 bg-gray-50 flex items-center justify-center p-8 aspect-square md:aspect-auto relative">
             {imageUrl && !imgError ? (
               <img src={imageUrl} alt={product.name} onError={() => setImgError(true)} className="max-w-full max-h-80 object-contain" />
             ) : (
               <img src="/logo.png" alt="" className="w-24 h-24 opacity-20" />
+            )}
+            {product.sold_out && (
+              <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                <span className="bg-red-600 text-white text-lg font-black px-6 py-2 rounded-full tracking-wider">품절</span>
+              </div>
             )}
           </div>
 
@@ -392,6 +403,7 @@ function ProductModal({ product, showPrice, onClose }: { product: Product; showP
             <div className="flex gap-2 mb-3">
               {product.major_name && <span className="text-xs px-2 py-0.5 rounded bg-gray-100 text-gray-500">{product.major_name}</span>}
               {product.minor_name && <span className="text-xs px-2 py-0.5 rounded bg-gray-100 text-gray-500">{product.minor_name}</span>}
+              {product.sold_out && <span className="text-xs px-2 py-0.5 rounded bg-red-100 text-red-600 font-bold">품절</span>}
             </div>
 
             <h2 className="text-2xl font-black text-gray-900">{getDisplayName(product)}</h2>
