@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
-import { fetchProductByCode, getImageUrl, formatPrice, Product } from '@/lib/supabase';
+import { fetchProductByCode, getImageUrl, getFallbackImageUrl, formatPrice, Product } from '@/lib/supabase';
 
 const CATEGORY_ICONS: Record<string, string> = {
   '농산품': '', '수산품': '', '축산품': '', '공산품': '',
@@ -16,6 +16,7 @@ function ProductDetail() {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [imgError, setImgError] = useState(false);
+  const [usingFallback, setUsingFallback] = useState(false);
 
   useEffect(() => {
     if (code) loadProduct(code);
@@ -46,7 +47,13 @@ function ProductDetail() {
     );
   }
 
-  const imageUrl = getImageUrl(product);
+  const primaryUrl = getImageUrl(product);
+  const fallbackUrl = getFallbackImageUrl(product);
+  const imageUrl = usingFallback ? fallbackUrl : primaryUrl;
+  const handleError = () => {
+    if (!usingFallback && fallbackUrl) setUsingFallback(true);
+    else setImgError(true);
+  };
   const icon = '';
 
   let supplyPrice = 0;
@@ -82,7 +89,7 @@ function ProductDetail() {
               <img
                 src={imageUrl}
                 alt={product.name}
-                onError={() => setImgError(true)}
+                onError={handleError}
                 className="w-full h-full object-contain p-8"
               />
             ) : (

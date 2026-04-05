@@ -29,7 +29,13 @@ export interface Product {
   sort_order?: number;
 }
 
+// 1순위: R2에 업로드된 배경제거 이미지 (품목코드.png)
 export function getImageUrl(product: Product): string | null {
+  return `${STORAGE_URL}/${product.code}.png`;
+}
+
+// 2순위 fallback: R2에 없을 때 기존 Supabase/외부 이미지
+export function getFallbackImageUrl(product: Product): string | null {
   if (product.image_url) {
     const url = product.image_url;
     if (url.includes('supabase') && url.includes('product-images')) {
@@ -41,7 +47,7 @@ export function getImageUrl(product: Product): string | null {
     }
     return url;
   }
-  return `${STORAGE_URL}/${product.code}.png`;
+  return null;
 }
 
 // 예약 가격 자동 적용 — 적용일 도래한 pending 건을 products.sell에 반영

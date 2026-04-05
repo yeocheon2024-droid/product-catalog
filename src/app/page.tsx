@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { fetchProducts, getImageUrl, formatPrice, getDisplayName, Product } from '@/lib/supabase';
+import { fetchProducts, getImageUrl, getFallbackImageUrl, formatPrice, getDisplayName, Product } from '@/lib/supabase';
 
 const CATEGORY_ICONS: Record<string, string> = {
   '농산품': '', '수산품': '', '축산품': '', '공산품': '',
@@ -316,8 +316,20 @@ export default function HomePage() {
 function ProductCard({ product, showPrice, onClick }: { product: Product; showPrice: boolean; onClick: () => void }) {
   const [imgError, setImgError] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
-  const imageUrl = getImageUrl(product);
-  const icon = '';
+  const [usingFallback, setUsingFallback] = useState(false);
+  const primaryUrl = getImageUrl(product);
+  const fallbackUrl = getFallbackImageUrl(product);
+  const imageUrl = usingFallback ? fallbackUrl : primaryUrl;
+
+  const handleError = () => {
+    // R2 이미지 실패 시 Supabase/외부 이미지로 fallback
+    if (!usingFallback && fallbackUrl) {
+      setUsingFallback(true);
+      setImgLoaded(false);
+    } else {
+      setImgError(true);
+    }
+  };
 
   return (
     <div onClick={onClick} className="product-card cursor-pointer group">
@@ -331,7 +343,7 @@ function ProductCard({ product, showPrice, onClick }: { product: Product; showPr
               alt={product.name}
               loading="lazy"
               onLoad={() => setImgLoaded(true)}
-              onError={() => setImgError(true)}
+              onError={handleError}
               className={`card-img w-full h-full object-contain p-4 ${imgLoaded ? 'img-fade' : 'opacity-0'}`}
             />
           </>
@@ -361,8 +373,18 @@ function ProductCard({ product, showPrice, onClick }: { product: Product; showPr
 
 function ProductModal({ product, showPrice, onClose }: { product: Product; showPrice: boolean; onClose: () => void }) {
   const [imgError, setImgError] = useState(false);
-  const imageUrl = getImageUrl(product);
-  const icon = '';
+  const [usingFallback, setUsingFallback] = useState(false);
+  const primaryUrl = getImageUrl(product);
+  const fallbackUrl = getFallbackImageUrl(product);
+  const imageUrl = usingFallback ? fallbackUrl : primaryUrl;
+
+  const handleError = () => {
+    if (!usingFallback && fallbackUrl) {
+      setUsingFallback(true);
+    } else {
+      setImgError(true);
+    }
+  };
 
   let supplyPrice = 0;
   let vat = 0;
@@ -387,7 +409,7 @@ function ProductModal({ product, showPrice, onClose }: { product: Product; showP
           {/* 좌: 이미지 (빙그레 스타일) */}
           <div className="md:w-1/2 bg-gray-50 flex items-center justify-center p-8 aspect-square md:aspect-auto relative">
             {imageUrl && !imgError ? (
-              <img src={imageUrl} alt={product.name} onError={() => setImgError(true)} className="max-w-full max-h-80 object-contain" />
+              <img src={imageUrl} alt={product.name} onError={handleError} className="max-w-full max-h-80 object-contain" />
             ) : (
               <img src="/logo.png" alt="" className="w-24 h-24 opacity-20" />
             )}
