@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { fetchProducts, getImageUrl, getFallbackImageUrl, formatPrice, getDisplayName, Product } from '@/lib/supabase';
+import { fetchProducts, fetchCategoryOrder, getImageUrl, getFallbackImageUrl, formatPrice, getDisplayName, Product } from '@/lib/supabase';
 
 const CATEGORY_ICONS: Record<string, string> = {
   '농산품': '', '수산품': '', '축산품': '', '공산품': '',
@@ -11,6 +11,7 @@ const ITEMS_PER_PAGE = 30;
 
 export default function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [categoryOrder, setCategoryOrder] = useState<Record<string, number>>({});
   const [allMinorCategories, setAllMinorCategories] = useState<string[]>([]);
   const [activeCategory, setActiveCategory] = useState('전체');
   const [search, setSearch] = useState('');
@@ -60,16 +61,15 @@ export default function HomePage() {
 
   async function loadProducts() {
     setLoading(true);
-    const data = await fetchProducts();
+    const [data, orderMap] = await Promise.all([fetchProducts(), fetchCategoryOrder()]);
     setProducts(data);
+    setCategoryOrder(orderMap);
     const minors = new Set(data.map(p => p.minor_name).filter(Boolean));
-    const PRIORITY_ORDER = ['쌀', '김치/반찬', '계란', '기름/분말'];
+    // 카테고리 순서 = ERP 정렬관리(category_order) → 없으면 품목 수 많은 순
     const sorted = Array.from(minors).sort((a, b) => {
-      const aIdx = PRIORITY_ORDER.indexOf(a);
-      const bIdx = PRIORITY_ORDER.indexOf(b);
-      if (aIdx !== -1 && bIdx !== -1) return aIdx - bIdx;
-      if (aIdx !== -1) return -1;
-      if (bIdx !== -1) return 1;
+      const aOrd = orderMap[a] !== undefined ? orderMap[a] : 9999;
+      const bOrd = orderMap[b] !== undefined ? orderMap[b] : 9999;
+      if (aOrd !== bOrd) return aOrd - bOrd;
       const aCount = data.filter(p => p.minor_name === a).length;
       const bCount = data.filter(p => p.minor_name === b).length;
       return bCount - aCount;
@@ -95,12 +95,10 @@ export default function HomePage() {
       return aIsKimchi - bIsKimchi;
     }
     if (activeCategory !== '전체') return 0;
-    const PRIORITY_ORDER = ['쌀', '김치/반찬', '계란', '기름/분말'];
-    const aIdx = PRIORITY_ORDER.indexOf(a.minor_name);
-    const bIdx = PRIORITY_ORDER.indexOf(b.minor_name);
-    const aOrder = aIdx !== -1 ? aIdx : 100 - products.filter(p => p.minor_name === a.minor_name).length;
-    const bOrder = bIdx !== -1 ? bIdx : 100 - products.filter(p => p.minor_name === b.minor_name).length;
-    if (aOrder !== bOrder) return aOrder - bOrder;
+    // 전체 보기: ERP 정렬관리(category_order) 기준 → 없으면 후순위
+    const aOrd = categoryOrder[a.minor_name] !== undefined ? categoryOrder[a.minor_name] : 9999;
+    const bOrd = categoryOrder[b.minor_name] !== undefined ? categoryOrder[b.minor_name] : 9999;
+    if (aOrd !== bOrd) return aOrd - bOrd;
     // 전체 목록에서 쌀끼리는 가격 오름차순
     if (a.minor_name === '쌀' && b.minor_name === '쌀') {
       return (a.sell || Number.MAX_SAFE_INTEGER) - (b.sell || Number.MAX_SAFE_INTEGER);
