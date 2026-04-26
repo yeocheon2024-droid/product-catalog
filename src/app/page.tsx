@@ -362,7 +362,12 @@ function ProductCard({ product, showPrice, onClick }: { product: Product; showPr
           <p className="text-xs text-gray-400 mt-0.5 truncate">{product.spec}</p>
         )}
         {showPrice && product.sell > 0 && (
-          <p className={`text-sm font-bold mt-1 ${product.sold_out ? 'text-gray-400 line-through' : 'text-amber-700'}`}>{formatPrice(product.sell)}</p>
+          <>
+            <p className={`text-sm font-bold mt-1 ${product.sold_out ? 'text-gray-400 line-through' : 'text-amber-700'}`}>{formatPrice(product.sell)}</p>
+            {product.transfer_price && product.transfer_price > 0 && !product.sold_out && (
+              <p className="text-xs font-semibold text-blue-600 mt-0.5">이체할인가 {formatPrice(product.transfer_price)}</p>
+            )}
+          </>
         )}
       </div>
     </div>
@@ -452,6 +457,12 @@ function ProductModal({ product, showPrice, onClose }: { product: Product; showP
                   <span className="text-sm text-gray-500">판매단가</span>
                   <span className="text-xl font-black text-amber-700">{formatPrice(product.sell)}</span>
                 </div>
+                {product.transfer_price && product.transfer_price > 0 && (
+                  <div className="mt-2 pt-2 border-t border-amber-200 flex justify-between items-center">
+                    <span className="text-sm text-blue-600 font-semibold">이체할인가</span>
+                    <span className="text-lg font-black text-blue-600">{formatPrice(product.transfer_price)}</span>
+                  </div>
+                )}
                 {product.tax === '과세' && (
                   <div className="mt-2 pt-2 border-t border-amber-200 text-xs text-gray-400 space-y-1">
                     <div className="flex justify-between"><span>공급가액</span><span>{supplyPrice.toLocaleString()}원</span></div>

@@ -124,6 +124,12 @@ function ProductDetail() {
                 <span className="text-sm text-gray-500">판매단가</span>
                 <span className="text-xl font-bold text-gray-900">{formatPrice(product.sell)}</span>
               </div>
+              {product.transfer_price && product.transfer_price > 0 && (
+                <div className="mt-2 pt-2 border-t border-gray-200 flex justify-between items-center">
+                  <span className="text-sm text-blue-600 font-semibold">이체할인가</span>
+                  <span className="text-lg font-bold text-blue-600">{formatPrice(product.transfer_price)}</span>
+                </div>
+              )}
               {product.tax === '과세' && (
                 <div className="mt-2 pt-2 border-t border-gray-200 text-xs text-gray-400 space-y-1">
                   <div className="flex justify-between"><span>공급가액</span><span>{supplyPrice.toLocaleString()}원</span></div>
