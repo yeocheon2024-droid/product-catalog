@@ -21,8 +21,8 @@ export interface Product {
   vendor_name: string;
   vendor_type: string;
   cost: number;
+  /** 이체할인가 (계좌이체 결제 시 받는 금액) */
   sell: number;
-  transfer_price?: number | null;
   registered_at: string;
   image_url?: string;
   display_name?: string;
@@ -149,4 +149,10 @@ export function getDisplayName(product: Product): string {
 export function formatPrice(price: number): string {
   if (!price || price <= 0) return '-';
   return price.toLocaleString('ko-KR') + '원';
+}
+
+/** 이체할인가(sell)에서 정상가(카드 결제) 자동 계산 — 3% 가산, 10원 단위 반올림 */
+export function calcCardPrice(sell: number): number {
+  if (!sell || sell <= 0) return 0;
+  return Math.round((sell * 1.03) / 10) * 10;
 }
