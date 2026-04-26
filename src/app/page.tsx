@@ -363,7 +363,7 @@ function ProductCard({ product, showPrice, onClick }: { product: Product; showPr
         )}
         {showPrice && product.sell > 0 && (
           <>
-            <p className={`text-sm font-bold mt-1 ${product.sold_out ? 'text-gray-400 line-through' : 'text-amber-700'}`}>이체할인가 {formatPrice(product.sell)}</p>
+            <p className={`text-sm font-bold mt-1 ${product.sold_out ? 'text-gray-400 line-through' : 'text-amber-700'}`}>현금할인가 {formatPrice(product.sell)}</p>
             {!product.sold_out && (
               <p className="text-xs text-gray-400 mt-0.5">정상가 {formatPrice(calcCardPrice(product.sell))}</p>
             )}
@@ -454,7 +454,7 @@ function ProductModal({ product, showPrice, onClose }: { product: Product; showP
             {showPrice && product.sell > 0 && (
               <div className="mt-4 p-4 bg-amber-50 rounded-xl">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-amber-700 font-semibold">이체할인가</span>
+                  <span className="text-sm text-amber-700 font-semibold">현금할인가</span>
                   <span className="text-xl font-black text-amber-700">{formatPrice(product.sell)}</span>
                 </div>
                 <div className="mt-2 pt-2 border-t border-amber-200 flex justify-between items-center">

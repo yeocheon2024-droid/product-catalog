@@ -121,7 +121,7 @@ function ProductDetail() {
           {showPrice && product.sell > 0 && (
             <div className="mt-4 p-4 bg-gray-50 rounded-xl">
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-700 font-semibold">이체할인가</span>
+                <span className="text-sm text-gray-700 font-semibold">현금할인가</span>
                 <span className="text-xl font-bold text-gray-900">{formatPrice(product.sell)}</span>
               </div>
               <div className="mt-2 pt-2 border-t border-gray-200 flex justify-between items-center">
