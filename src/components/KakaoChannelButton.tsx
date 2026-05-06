@@ -2,8 +2,8 @@
 
 import { useEffect } from 'react';
 
-// TODO: 카카오채널 ID를 실제 값으로 교체하세요
-const KAKAO_CHANNEL_ID = '_xnQgVX';
+// 지구농산 카카오톡 비즈니스 채널 검색용 ID
+const KAKAO_CHANNEL_ID = '_wHljX';
 
 export default function KakaoChannelButton() {
   useEffect(() => {
