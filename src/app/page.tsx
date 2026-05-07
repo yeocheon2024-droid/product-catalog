@@ -83,6 +83,10 @@ export default function HomePage() {
     const matchSearch = !search || p.name.toLowerCase().includes(search.toLowerCase()) || (p.display_name || '').toLowerCase().includes(search.toLowerCase()) || p.code.toLowerCase().includes(search.toLowerCase());
     return matchCategory && matchSearch;
   }).sort((a, b) => {
+    // 자체매입(지구로켓) 항상 먼저
+    const aSelf = a.vendor_type === 'self' ? 0 : 1;
+    const bSelf = b.vendor_type === 'self' ? 0 : 1;
+    if (aSelf !== bSelf) return aSelf - bSelf;
     if (activeCategory === '쌀') {
       const aPrice = a.sell || Number.MAX_SAFE_INTEGER;
       const bPrice = b.sell || Number.MAX_SAFE_INTEGER;
